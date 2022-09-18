@@ -1,11 +1,12 @@
-import path from 'path';
-import webpack from 'webpack';
-import {VueLoaderPlugin} from 'vue-loader';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import {ENV_DEFINE, ROOT_DIR} from './config';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import path from 'path';
+import { VueLoaderPlugin } from 'vue-loader';
+import webpack from 'webpack';
+import { ROOT_DIR } from './config';
 
 const config: webpack.Configuration = {
+    mode: 'production',
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
         alias: {
@@ -50,10 +51,6 @@ const config: webpack.Configuration = {
         ],
     },
     plugins: [
-        new webpack.ProgressPlugin(),
-        new webpack.DefinePlugin({
-            ...ENV_DEFINE,
-        }),
         new HtmlWebpackPlugin({
             template: path.resolve(ROOT_DIR, 'public', './index.html'),
             minify: {
@@ -66,6 +63,7 @@ const config: webpack.Configuration = {
             filename: 'static/css/[name].[contenthash:8].css',
             chunkFilename: 'static/css/[name].[contenthash:8].css',
         }),
+        new webpack.ProgressPlugin(),
     ],
 };
 

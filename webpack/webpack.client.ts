@@ -4,6 +4,7 @@ import {ENV_DEFINE, ROOT_DIR} from './config';
 import commonConfig from './webpack.common';
 import type {Configuration as DevServerConfiguration} from 'webpack-dev-server';
 import webpack from 'webpack';
+import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
 
 const devServer: DevServerConfiguration = {
     static: {
@@ -28,6 +29,7 @@ const config = merge(commonConfig, {
             ...ENV_DEFINE,
             'process.env.IS_NODE': false,
         }),
+        new WebpackManifestPlugin({fileName: 'server-manifest.json'}),
     ],
 });
 

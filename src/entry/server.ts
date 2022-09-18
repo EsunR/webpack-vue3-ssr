@@ -1,4 +1,4 @@
-import createAppInstance from '@/entry/main';
+import createAppInstance from './main';
 import {Request, Response} from 'express';
 
 export interface Ctx {
