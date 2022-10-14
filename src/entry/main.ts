@@ -1,9 +1,9 @@
-import {IS_NODE} from '@/utils/ssr';
-import {createSSRApp, createApp} from 'vue';
 import App from '@/App.vue';
+import '@/styles/global.css';
+import {createSSRApp} from 'vue';
 
 export default function createAppInstance() {
-    const app = IS_NODE ? createSSRApp(App) : createApp(App);
+    const app = createSSRApp(App);
 
     return {
         app,

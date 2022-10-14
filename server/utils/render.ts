@@ -5,11 +5,11 @@ import {CreateAppFunc, IRenderHTMLOptions} from '../types';
 async function handleSSRRender(options: {template: string; req: Request; createApp: CreateAppFunc}) {
     const {template, req, createApp} = options;
     const {app} = createApp();
-    const SSRContext = {
+    const ssrContext = {
         path: req.url,
         ua: req.get('User-Agent'),
     };
-    const appContent = await renderToString(app, SSRContext);
+    const appContent = await renderToString(app, ssrContext);
     const html = template.replace('<!--app-html-->', `${appContent}`);
     return html;
 }

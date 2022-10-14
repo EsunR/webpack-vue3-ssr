@@ -1,5 +1,4 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import { VueLoaderPlugin } from 'vue-loader';
 import webpack from 'webpack';
@@ -31,14 +30,6 @@ const config: webpack.Configuration = {
                 },
             },
             {
-                test: /\.css$/,
-                use: [
-                    process.env.NODE_ENV === 'development' ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                ],
-            },
-            {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
                 loader: 'ts-loader',
@@ -59,10 +50,6 @@ const config: webpack.Configuration = {
             },
         }),
         new VueLoaderPlugin(),
-        new MiniCssExtractPlugin({
-            filename: 'static/css/[name].[contenthash:8].css',
-            chunkFilename: 'static/css/[name].[contenthash:8].css',
-        }),
         new webpack.ProgressPlugin(),
     ],
 };

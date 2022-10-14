@@ -1,9 +1,9 @@
 import path from 'path';
 import webpack from 'webpack';
-import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
-import { merge } from 'webpack-merge';
+import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
+import {merge} from 'webpack-merge';
 import nodeExternals from 'webpack-node-externals';
-import { ENV_DEFINE, ROOT_DIR } from './config';
+import {ENV_DEFINE, ROOT_DIR} from './config';
 import commonConfig from './webpack.common';
 
 const config = merge(commonConfig, {
@@ -14,6 +14,28 @@ const config = merge(commonConfig, {
         clean: true,
         filename: 'static/js/[name].[contenthash:8].js',
         libraryTarget: 'commonjs2',
+    },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'vue-style-loader',
+                        options: {
+                            esModule: false,
+                        },
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            esModule: false,
+                        },
+                    },
+                    'postcss-loader',
+                ],
+            },
+        ],
     },
     plugins: [
         new webpack.DefinePlugin({

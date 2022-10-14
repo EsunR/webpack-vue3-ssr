@@ -5,6 +5,7 @@ import commonConfig from './webpack.common';
 import type {Configuration as DevServerConfiguration} from 'webpack-dev-server';
 import webpack from 'webpack';
 import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const devServer: DevServerConfiguration = {
     static: {
@@ -24,7 +25,25 @@ const config = merge(commonConfig, {
         chunkFilename: 'static/js/[name].[contenthash:8].js',
     },
     devServer,
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    process.env.NODE_ENV === 'development' ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+                    {
+                        loader: 'css-loader',
+                    },
+                    'postcss-loader',
+                ],
+            },
+        ],
+    },
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'static/css/[name].[contenthash:8].css',
+            chunkFilename: 'static/css/[name].[contenthash:8].css',
+        }),
         new webpack.DefinePlugin({
             ...ENV_DEFINE,
             'process.env.IS_NODE': false,
