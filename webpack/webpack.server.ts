@@ -3,11 +3,12 @@ import webpack from 'webpack';
 import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
 import {merge} from 'webpack-merge';
 import nodeExternals from 'webpack-node-externals';
-import {ENV_DEFINE, ROOT_DIR} from './config';
+import {ENV_DEFINE, IS_DEV, ROOT_DIR} from './config';
 import commonConfig from './webpack.common';
 
 const config = merge(commonConfig, {
     target: 'node',
+    mode: IS_DEV ? 'development' : 'production',
     entry: path.resolve(ROOT_DIR, './src/entry/server.ts'),
     output: {
         path: path.resolve(ROOT_DIR, './dist/server'),

@@ -8,38 +8,41 @@ import express from 'express';
 import {SSR_SERVER_PORT} from './config';
 import path from 'path';
 import {createCJSModel} from './utils';
-import {renderHtml} from './utils/render';
+import {handleSSR} from './utils/render';
 import {CreateAppFunc} from './types';
+import {merge} from 'webpack-merge';
+import {WebpackBuildSuccessLogPlugin} from './utils/plugin';
 
 const mfs = new MFS();
 
 const clientOutputPath = clientConfig.output?.path as string;
 const serverOutputPath = serverConfig.output?.path as string;
 
-const clientCompiler = webpack({
-    ...clientConfig,
-    mode: 'development',
-    devtool: 'source-map',
-    entry: [clientConfig.entry as string, 'webpack-hot-middleware/client'],
-    module: {
-        ...clientConfig.module,
-        parser: {
-            javascript: {
-                commonjs: true,
-                commonjsMagicComments: true,
-            },
+const clientCompiler = webpack(
+    merge(clientConfig, {
+        devServer: undefined,
+        entry: [clientConfig.entry as string, 'webpack-hot-middleware/client'],
+        watchOptions: {
+            ignored: ['node_modules', 'server'],
         },
-    },
-    watchOptions: {
-        ignored: ['node_modules', 'server'],
-    },
-    plugins: [...(clientConfig.plugins as any), new webpack.HotModuleReplacementPlugin()],
-});
+        plugins: [
+            new webpack.HotModuleReplacementPlugin(),
+            new WebpackBuildSuccessLogPlugin(() => {
+                console.log('Client build success');
+            }),
+        ],
+    })
+);
 
-const serverCompiler = webpack({
-    ...serverConfig,
-    mode: 'development',
-});
+const serverCompiler = webpack(
+    merge(serverConfig, {
+        plugins: [
+            new WebpackBuildSuccessLogPlugin(() => {
+                console.log('Server build success\n' + `Running on http://localhost:${SSR_SERVER_PORT}`);
+            }),
+        ],
+    })
+);
 
 const clientWbpMiddleware = webpackDevMiddleware(clientCompiler, {
     outputFileSystem: mfs as any,
@@ -67,15 +70,13 @@ app.use(webpackHotMiddleware(clientCompiler));
 
 app.get('*', async (req, res, next) => {
     const serverManifest = JSON.parse(mfs.readFileSync(path.join(serverOutputPath, 'server-manifest.json'), 'utf-8'));
-    
+
     const clientTemplate = mfs.readFileSync(path.join(clientOutputPath, 'index.html'), 'utf-8');
     const mainJsContent = mfs.readFileSync(path.join(serverOutputPath, serverManifest['main.js']));
 
     const createApp = createCJSModel(mainJsContent).default as CreateAppFunc;
 
-    renderHtml({template: clientTemplate, createApp})(req, res, next);
+    handleSSR({template: clientTemplate, createApp})(req, res, next);
 });
 
-app.listen(SSR_SERVER_PORT, () => {
-    console.log(`SSR server running on http://localhost:${SSR_SERVER_PORT}`);
-});
+app.listen(SSR_SERVER_PORT);

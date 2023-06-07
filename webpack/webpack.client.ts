@@ -1,6 +1,6 @@
 import path from 'path';
 import {merge} from 'webpack-merge';
-import {ENV_DEFINE, ROOT_DIR} from './config';
+import {ENV_DEFINE, IS_DEV, ROOT_DIR} from './config';
 import commonConfig from './webpack.common';
 import type {Configuration as DevServerConfiguration} from 'webpack-dev-server';
 import webpack from 'webpack';
@@ -17,6 +17,8 @@ const devServer: DevServerConfiguration = {
 
 const config = merge(commonConfig, {
     target: 'web',
+    mode: IS_DEV ? 'development' : 'production',
+    devtool: IS_DEV ? 'source-map' : false,
     entry: path.resolve(ROOT_DIR, './src/entry/client.ts'),
     output: {
         path: path.resolve(ROOT_DIR, './dist/client'),
@@ -30,7 +32,7 @@ const config = merge(commonConfig, {
             {
                 test: /\.css$/,
                 use: [
-                    process.env.NODE_ENV === 'development' ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+                    IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                     },
