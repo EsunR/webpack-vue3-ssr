@@ -1,14 +1,9 @@
 <template>
-    <Home />
+    <Layout class="layout">
+        <RouterView />
+    </Layout>
 </template>
 
-<script lang="ts">
-import Home from '@/views/home/index.vue';
-import {defineComponent} from 'vue';
-
-export default defineComponent({
-    components: {
-        Home,
-    },
-});
+<script lang="ts" setup>
+import Layout from '@/components/Layout/index.vue';
 </script>

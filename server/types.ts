@@ -1,15 +1,15 @@
 import {Request} from 'express';
 import createServerAppInstance from '../src/entry/server';
 
-export type CreateAppFunc = typeof createServerAppInstance;
+export type CreateServerAppInstanceFunc = typeof createServerAppInstance;
 
 export interface IHandleSSROptions {
     template: string;
-    createApp: CreateAppFunc;
+    createApp: CreateServerAppInstanceFunc;
 }
 
 export interface IRenderHTMLOptions {
     template: string;
     req: Request;
-    createApp: CreateAppFunc;
+    createApp: CreateServerAppInstanceFunc;
 }

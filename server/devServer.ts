@@ -9,9 +9,12 @@ import {SSR_SERVER_PORT} from './config';
 import path from 'path';
 import {createCJSModel} from './utils';
 import {handleSSR} from './utils/render';
-import {CreateAppFunc} from './types';
+import {CreateServerAppInstanceFunc} from './types';
 import {merge} from 'webpack-merge';
 import {WebpackBuildSuccessLogPlugin} from './utils/plugin';
+import middleware from './utils/middleware';
+import {log} from './utils/log';
+import chalk from 'chalk';
 
 const mfs = new MFS();
 
@@ -28,7 +31,7 @@ const clientCompiler = webpack(
         plugins: [
             new webpack.HotModuleReplacementPlugin(),
             new WebpackBuildSuccessLogPlugin(() => {
-                console.log('Client build success');
+                log('success', '[Webpack] Client build success');
             }),
         ],
     })
@@ -38,7 +41,8 @@ const serverCompiler = webpack(
     merge(serverConfig, {
         plugins: [
             new WebpackBuildSuccessLogPlugin(() => {
-                console.log('Server build success\n' + `Running on http://localhost:${SSR_SERVER_PORT}`);
+                log('success', '[Webpack] Server build success');
+                log('success', `[Webpack] SSR service running on ${chalk.green.underline(`http://localhost:${SSR_SERVER_PORT}`)}`);
             }),
         ],
     })
@@ -68,13 +72,15 @@ app.use(serverWbpMiddleware);
 
 app.use(webpackHotMiddleware(clientCompiler));
 
+middleware(app);
+
 app.get('*', async (req, res, next) => {
     const serverManifest = JSON.parse(mfs.readFileSync(path.join(serverOutputPath, 'server-manifest.json'), 'utf-8'));
 
     const clientTemplate = mfs.readFileSync(path.join(clientOutputPath, 'index.html'), 'utf-8');
     const mainJsContent = mfs.readFileSync(path.join(serverOutputPath, serverManifest['main.js']));
 
-    const createApp = createCJSModel(mainJsContent).default as CreateAppFunc;
+    const createApp = createCJSModel(mainJsContent).default as any as CreateServerAppInstanceFunc;
 
     handleSSR({template: clientTemplate, createApp})(req, res, next);
 });

@@ -5,11 +5,11 @@ WIP
 安装依赖：
 
 ```sh
-yarn add
+npm install
 ```
 
 开发模式：
 
 ```sh
-yarn dev:server
+npm run dev:server
 ```

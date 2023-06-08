@@ -1,6 +1,7 @@
+import devalue from '@nuxt/devalue';
 import {NextFunction, Request, Response} from 'express';
 import {renderToString} from 'vue/server-renderer';
-import {CreateAppFunc, IHandleSSROptions, IRenderHTMLOptions} from '../types';
+import {CreateServerAppInstanceFunc, IHandleSSROptions, IRenderHTMLOptions} from '../types';
 
 export function handleSSR(options: IHandleSSROptions) {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -10,8 +11,9 @@ export function handleSSR(options: IHandleSSROptions) {
 
         if (!isCsr && createApp) {
             try {
-                html = await renderHTML({template, req, createApp: createApp as CreateAppFunc});
+                html = await renderHTML({template, req, createApp: createApp as CreateServerAppInstanceFunc});
             } catch (error) {
+                console.log('error: ', error);
                 console.log('服务端渲染失败');
             }
         }
@@ -23,12 +25,16 @@ export function handleSSR(options: IHandleSSROptions) {
 
 async function renderHTML(options: IRenderHTMLOptions) {
     const {template, req, createApp} = options;
-    const {app} = createApp();
+    const {app, pinia} = await createApp({
+        req,
+    });
     const ssrContext = {
         path: req.url,
         ua: req.get('User-Agent'),
     };
     const appContent = await renderToString(app, ssrContext);
-    const html = template.replace('<!-- app-html -->', `${appContent}`);
+    const html = template
+        .replace('<!-- app-html -->', `${appContent}`)
+        .replace('<!-- app-state -->', `<script>window.__PINIA_STATE__ = ${devalue(pinia.state.value)}</script>`);
     return html;
 }

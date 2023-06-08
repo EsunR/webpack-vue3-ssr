@@ -3,9 +3,7 @@
         "transpileOnly": true,
         "files": true,
         "paths": {
-            "@/*": [
-                "src/*"
-            ]
+            "@/*": ["src/*"]
         },
         "compilerOptions": {
             "module": "CommonJS"
@@ -26,7 +24,8 @@
         "baseUrl": ".",
         "types": ["node"],
         "paths": {
-            "@/*": ["src/*"]
+            "@/*": ["src/*"],
+            "@server/*": ["server/*"]
         },
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
     },

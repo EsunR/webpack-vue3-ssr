@@ -10,6 +10,7 @@ const config: webpack.Configuration = {
         extensions: ['.ts', '.tsx', '.js'],
         alias: {
             '@': path.resolve(ROOT_DIR, './src'),
+            '@server': path.resolve(ROOT_DIR, './server'),
         },
     },
     module: {

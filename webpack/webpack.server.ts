@@ -18,24 +18,15 @@ const config = merge(commonConfig, {
     },
     module: {
         rules: [
+            // 服务端渲染不处理样式
             {
                 test: /\.css$/,
-                use: [
-                    {
-                        loader: 'vue-style-loader',
-                        options: {
-                            esModule: false,
-                        },
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            esModule: false,
-                        },
-                    },
-                    'postcss-loader',
-                ],
+                use: 'null-loader',
             },
+            {
+                test: /\.scss$/,
+                use: 'null-loader',
+            }
         ],
     },
     plugins: [
