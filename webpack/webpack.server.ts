@@ -9,6 +9,7 @@ import commonConfig from './webpack.common';
 const config = merge(commonConfig, {
     target: 'node',
     mode: IS_DEV ? 'development' : 'production',
+    devtool: false,
     entry: path.resolve(ROOT_DIR, './src/entry/server.ts'),
     output: {
         path: path.resolve(ROOT_DIR, './dist/server'),

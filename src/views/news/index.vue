@@ -7,17 +7,23 @@ export default {
 <script lang="ts" setup>
 import {storeToRefs} from 'pinia';
 import {useNewsStore} from '@/store/news';
-import {onServerPrefetch} from 'vue';
+import {onMounted, onServerPrefetch, onUnmounted} from 'vue';
 
 const newsStore = useNewsStore();
 const {news} = storeToRefs(newsStore);
 
 onServerPrefetch(async () => {
-    try {
+    await newsStore.fetchNews();
+});
+
+onMounted(async () => {
+    if (!news?.value) {
         await newsStore.fetchNews();
-    } catch (error) {
-        console.log(error);
     }
+});
+
+onUnmounted(() => {
+    newsStore.$reset();
 });
 </script>
 

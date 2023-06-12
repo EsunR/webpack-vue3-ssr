@@ -9,19 +9,26 @@ const config: webpack.Configuration = {
     target: 'node',
     entry: './server/index.ts',
     output: {
-        path: path.resolve(rootDir, 'dist/build'),
+        path: path.resolve(rootDir, 'dist'),
         clean: true,
         filename: 'server.js',
-        libraryTarget: 'commonjs2',
     },
     module: {
         rules: [
             {
                 test: /\.ts$/,
-                use: 'ts-loader',
                 exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'ts-loader',
+                        options: {transpileOnly: true},
+                    },
+                ],
             },
         ],
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
     },
     externalsPresets: {node: true},
     externals: [nodeExternals()],

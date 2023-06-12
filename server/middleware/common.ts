@@ -1,12 +1,18 @@
-import {Express} from 'express';
+import express, {Express} from 'express';
 import {createProxyMiddleware, fixRequestBody} from 'http-proxy-middleware';
 import {PROXIES} from '../config';
-import {log} from './log';
+import {log} from '../utils/log';
 
 const APP_ENV = process.env.APP_ENV || 'dev';
 
-export default function (app: Express) {
+export default function commonMiddleware(app: Express) {
     app.enable('trust proxy');
+
+    app.use(
+        express.static('client', {
+            index: false,
+        })
+    );
 
     const needProxyPaths = Object.keys(PROXIES[APP_ENV] || {});
     needProxyPaths?.forEach(path => {

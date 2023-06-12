@@ -1,3 +1,5 @@
+import {NodeVM} from 'vm2';
+
 /**
  * 根据代码创建 CommonJS 模块
  */
@@ -6,4 +8,21 @@ export function createCJSModel(code: string) {
     const temp = {exports: {default: () => {}}};
     eval('(function (module) {' + code + '})(temp);');
     return temp.exports;
+}
+
+/**
+ * 根据代码创建 CommonJS 模块（基于 VM）
+ */
+export function createCJSModelInVm(code: string) {
+    const vm = new NodeVM({
+        allowAsync: true,
+        require: {
+            external: true,
+        },
+        eval: true,
+        wrapper: 'commonjs',
+        sandbox: {},
+    });
+    const runResult = vm.run(code, 'vm2.js');
+    return runResult;
 }

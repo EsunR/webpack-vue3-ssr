@@ -1,4 +1,10 @@
 {
     "editor.tabSize": 4,
-    "stylelint.validate": ["css", "scss", "vue", "html"]
+    "stylelint.validate": [
+        "css",
+        "scss",
+        "vue",
+        "html"
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

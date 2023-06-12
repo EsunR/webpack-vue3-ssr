@@ -16,6 +16,8 @@ module.exports = {
     root: true,
     rules: {
         'vue/multi-word-component-names': 'off',
-        '@typescript-eslint/no-explicit-any': 'off'
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
     },
 };
