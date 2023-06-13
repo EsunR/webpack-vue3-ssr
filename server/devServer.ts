@@ -10,10 +10,10 @@ import clientConfig from '../webpack/webpack.client';
 import serverConfig from '../webpack/webpack.server';
 import {SSR_SERVER_PORT} from './config';
 import commonMiddleware from './middleware/common';
-import {CreateServerAppInstanceFunc} from './types';
+import {CreateServerAppInstanceFunc, IWebpackStats} from './types';
 import {createCJSModelInVm} from './utils';
 import {log} from './utils/log';
-import {WebpackBuildSuccessLogPlugin} from './utils/plugin';
+import {WebpackBuildCbPlugin} from './utils/plugin';
 import {handleSSR} from './utils/render';
 
 const mfs = new MFS();
@@ -22,17 +22,25 @@ const clientOutputPath = clientConfig.output?.path as string;
 const serverOutputPath = serverConfig.output?.path as string;
 
 let serverManifest = {};
+let clientWpStats: IWebpackStats = {
+    publicPath: '',
+    namedChunkGroups: {},
+};
 let clientTemplate = '';
 let mainJsContent = '';
 let createApp = {} as CreateServerAppInstanceFunc;
 
 function onServerBuildSuccess() {
-    serverManifest = JSON.parse(mfs.readFileSync(path.join(serverOutputPath, 'server-manifest.json'), 'utf-8'));
+    log('success', '[Webpack] Server build success');
+    log('success', `[Webpack] SSR service running on ${chalk.green.underline(`http://localhost:${SSR_SERVER_PORT}`)}`);
+    serverManifest = JSON.parse(mfs.readFileSync(path.join(serverOutputPath, 'manifest.json'), 'utf-8'));
     mainJsContent = mfs.readFileSync(path.join(serverOutputPath, serverManifest['main.js']), 'utf-8');
     createApp = createCJSModelInVm(mainJsContent).default as any as CreateServerAppInstanceFunc;
 }
 
 function onClientBuildSuccess() {
+    log('success', '[Webpack] Client build success');
+    clientWpStats = JSON.parse(mfs.readFileSync(path.join(clientOutputPath, 'stats.json'), 'utf-8'));
     clientTemplate = mfs.readFileSync(path.join(clientOutputPath, 'index.html'), 'utf-8');
 }
 
@@ -44,37 +52,22 @@ const clientCompiler = webpack(
         watchOptions: {
             ignored: ['node_modules', 'server'],
         },
-        plugins: [
-            new webpack.HotModuleReplacementPlugin(),
-            new WebpackBuildSuccessLogPlugin(() => {
-                log('success', '[Webpack] Client build success');
-                onClientBuildSuccess();
-            }),
-        ],
+        plugins: [new webpack.HotModuleReplacementPlugin(), new WebpackBuildCbPlugin(onClientBuildSuccess)],
     })
 );
 
 const serverCompiler = webpack(
     merge(serverConfig, {
-        plugins: [
-            new WebpackBuildSuccessLogPlugin(() => {
-                log('success', '[Webpack] Server build success');
-                log(
-                    'success',
-                    `[Webpack] SSR service running on ${chalk.green.underline(`http://localhost:${SSR_SERVER_PORT}`)}`
-                );
-                onServerBuildSuccess();
-            }),
-        ],
+        plugins: [new WebpackBuildCbPlugin(onServerBuildSuccess)],
     })
 );
 
-const clientWbpMiddleware = webpackDevMiddleware(clientCompiler, {
+const clientWpMiddleware = webpackDevMiddleware(clientCompiler, {
     outputFileSystem: mfs as any,
     index: false,
 });
 
-const serverWbpMiddleware = webpackDevMiddleware(serverCompiler, {
+const serverWpMiddleware = webpackDevMiddleware(serverCompiler, {
     outputFileSystem: mfs as any,
     index: false,
 });
@@ -88,16 +81,16 @@ app.use(
     })
 );
 
-app.use(clientWbpMiddleware);
+app.use(clientWpMiddleware);
 
-app.use(serverWbpMiddleware);
+app.use(serverWpMiddleware);
 
 app.use(webpackHotMiddleware(clientCompiler));
 
 commonMiddleware(app);
 
 app.get('*', async (req, res, next) => {
-    handleSSR({template: clientTemplate, createApp})(req, res, next);
+    handleSSR({template: clientTemplate, createApp, clientWpStats})(req, res, next);
 });
 
 app.listen(SSR_SERVER_PORT);

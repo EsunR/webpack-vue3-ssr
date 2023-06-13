@@ -6,10 +6,26 @@ export type CreateServerAppInstanceFunc = typeof createServerAppInstance;
 export interface IHandleSSROptions {
     template: string;
     createApp: CreateServerAppInstanceFunc;
+    clientWpStats: IWebpackStats;
 }
 
-export interface IRenderHTMLOptions {
-    template: string;
+export interface IRenderHTMLOptions extends IHandleSSROptions {
     req: Request;
-    createApp: CreateServerAppInstanceFunc;
+}
+
+export interface IWebpackStats {
+    publicPath: string;
+    namedChunkGroups: Record<
+        string,
+        {
+            name: string;
+            assets: Array<{name: string}>;
+            auxiliaryAssets: Array<{name: string}>;
+        }
+    >;
+}
+
+export interface IPreloadLinks {
+    css: string;
+    js: string;
 }

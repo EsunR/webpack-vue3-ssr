@@ -10,6 +10,18 @@ export const PROXIES: {[env: string]: {[path: string]: Options}} = {
             changeOrigin: true,
         },
     },
-    preonline: {},
-    online: {},
+    preonline: {
+        '/rsshub': {
+            target: 'https://rsshub.app',
+            pathRewrite: {'^/rsshub': ''},
+            changeOrigin: true,
+        },
+    },
+    online: {
+        '/rsshub': {
+            target: 'https://rsshub.app',
+            pathRewrite: {'^/rsshub': ''},
+            changeOrigin: true,
+        },
+    },
 };

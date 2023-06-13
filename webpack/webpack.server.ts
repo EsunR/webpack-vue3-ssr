@@ -1,6 +1,5 @@
 import path from 'path';
 import webpack from 'webpack';
-import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
 import {merge} from 'webpack-merge';
 import nodeExternals from 'webpack-node-externals';
 import {ENV_DEFINE, IS_DEV, ROOT_DIR} from './config';
@@ -27,7 +26,7 @@ const config = merge(commonConfig, {
             {
                 test: /\.scss$/,
                 use: 'null-loader',
-            }
+            },
         ],
     },
     plugins: [
@@ -37,7 +36,6 @@ const config = merge(commonConfig, {
         }),
         // 服务端禁用分包, 否则会造成开发模式下 mfs 无法进行 module resolve
         new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}),
-        new WebpackManifestPlugin({fileName: 'server-manifest.json'}),
     ],
     // 服务端关闭代码压缩和分包
     optimization: {

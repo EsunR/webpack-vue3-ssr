@@ -1,11 +1,11 @@
 import {Compiler, Stats} from 'webpack';
 
-export class WebpackBuildSuccessLogPlugin {
-    constructor(private readonly logHook?: (stats: Stats) => void) {}
+export class WebpackBuildCbPlugin {
+    constructor(private readonly callback?: (stats: Stats) => void) {}
     apply(compiler: Compiler) {
-        compiler.hooks.done.tap('WebpackBuildSuccessLogPlugin', stats => {
+        compiler.hooks.done.tap('WebpackBuildCbPlugin', stats => {
             console.log("\n==============================");
-            this.logHook?.(stats);
+            this.callback?.(stats);
             console.log("==============================");
         });
     }

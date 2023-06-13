@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import nodeExternals from 'webpack-node-externals';
+import CopyPlugin from 'copy-webpack-plugin';
 
 const rootDir = path.resolve(__dirname, '../');
 
@@ -30,6 +31,20 @@ const config: webpack.Configuration = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
     },
+    plugins: [
+        new CopyPlugin({
+            patterns: [
+                {
+                    from: path.resolve(rootDir, 'package.json'),
+                    to: path.resolve(rootDir, 'dist'),
+                },
+                {
+                    from: path.resolve(rootDir, 'package-lock.json'),
+                    to: path.resolve(rootDir, 'dist'),
+                },
+            ],
+        }),
+    ],
     externalsPresets: {node: true},
     externals: [nodeExternals()],
 };

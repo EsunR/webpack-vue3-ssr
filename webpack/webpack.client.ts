@@ -1,19 +1,10 @@
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
+import webpack from 'webpack';
 import {merge} from 'webpack-merge';
 import {ENV_DEFINE, IS_DEV, ROOT_DIR} from './config';
 import commonConfig from './webpack.common';
-import type {Configuration as DevServerConfiguration} from 'webpack-dev-server';
-import webpack from 'webpack';
-import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
-const devServer: DevServerConfiguration = {
-    static: {
-        directory: path.join(ROOT_DIR, './public'),
-    },
-    compress: true,
-    port: 9000,
-};
 
 const config = merge(commonConfig, {
     target: 'web',
@@ -25,17 +16,13 @@ const config = merge(commonConfig, {
         clean: true,
         filename: 'static/js/[name].[contenthash:8].js',
         chunkFilename: 'static/js/[name].[contenthash:8].js',
+        publicPath: '/',
     },
-    devServer,
     module: {
         rules: [
             {
                 test: /\.css$/,
-                use: [
-                    IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    'postcss-loader',
-                ],
+                use: [IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
             },
             {
                 test: /\.scss$/,
@@ -45,10 +32,17 @@ const config = merge(commonConfig, {
                     'postcss-loader',
                     'sass-loader',
                 ],
-            }
+            },
         ],
     },
     plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(ROOT_DIR, 'public', './index.html'),
+            minify: {
+                // 不删除 html 里的注释, 因为在 SSR 侧使用的是注释来匹配内容要插入的位置
+                removeComments: false,
+            },
+        }),
         new MiniCssExtractPlugin({
             filename: 'static/css/[name].[contenthash:8].css',
             chunkFilename: 'static/css/[name].[contenthash:8].css',
@@ -57,7 +51,6 @@ const config = merge(commonConfig, {
             ...ENV_DEFINE,
             'process.env.IS_NODE': false,
         }),
-        new WebpackManifestPlugin({fileName: 'server-manifest.json'}),
     ],
 });
 

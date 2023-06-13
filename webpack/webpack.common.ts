@@ -1,8 +1,9 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import path from 'path';
-import { VueLoaderPlugin } from 'vue-loader';
+import {VueLoaderPlugin} from 'vue-loader';
 import webpack from 'webpack';
-import { ROOT_DIR } from './config';
+import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
+import {StatsWriterPlugin} from 'webpack-stats-plugin';
+import {IS_DEV, ROOT_DIR} from './config';
 
 const config: webpack.Configuration = {
     mode: 'production',
@@ -43,15 +44,13 @@ const config: webpack.Configuration = {
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(ROOT_DIR, 'public', './index.html'),
-            minify: {
-                // 不删除 html 里的注释, 因为在 SSR 侧使用的是注释来匹配内容要插入的位置
-                removeComments: false,
-            },
-        }),
-        new VueLoaderPlugin(),
         new webpack.ProgressPlugin(),
+        new VueLoaderPlugin(),
+        new WebpackManifestPlugin({fileName: 'manifest.json'}),
+        new StatsWriterPlugin({
+            filename: 'stats.json',
+            fields: ['publicPath', 'namedChunkGroups'],
+        }),
     ],
 };
 
