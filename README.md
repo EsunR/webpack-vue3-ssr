@@ -11,5 +11,14 @@ npm install
 开发模式：
 
 ```sh
-npm run dev:server
+npm run dev
+```
+
+
+构建/运行：
+
+```sh
+npm run build
+cd dist
+node index.js
 ```
