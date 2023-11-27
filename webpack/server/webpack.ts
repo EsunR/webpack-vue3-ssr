@@ -23,6 +23,7 @@ const config: webpack.Configuration = {
             type: 'commonjs2',
             export: 'default',
         },
+        iife: false,
     },
     optimization: {
         splitChunks: {
