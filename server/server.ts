@@ -17,7 +17,7 @@ const clientTemplate = fs.readFileSync(path.resolve(__dirname, CLIENT_PATH, 'ind
 const clientWpStats = JSON.parse(fs.readFileSync(path.resolve(__dirname, CLIENT_PATH, 'stats.json'), 'utf-8'));
 const mainJsPath = path.resolve(__dirname, SERVER_PATH, serverManifest['main.js']);
 // @ts-ignore
-const createApp = __non_webpack_require__(mainJsPath).default as any as CreateServerAppInstanceFunc;
+const createApp = require(mainJsPath).default as any as CreateServerAppInstanceFunc;
 
 commonMiddleware(app);
 

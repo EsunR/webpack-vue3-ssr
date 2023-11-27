@@ -23,8 +23,8 @@
         "paths": {
             "@/*": ["app/*"],
             "@server/*": ["server/*"]
-        }
+        },
     },
-    "include": ["app/**/*.ts", "app/**/*.tsx", "app/**/*.vue"],
+    "include": ["app/**/*.ts", "app/**/*.tsx", "app/**/*.vue", "server/**/*.ts"],
     "exclude": ["node_modules"]
 }

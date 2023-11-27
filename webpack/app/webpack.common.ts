@@ -5,6 +5,7 @@ import path from 'path';
 import {VueLoaderPlugin} from 'vue-loader';
 import webpack from 'webpack';
 import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
+// @ts-ignore
 import {StatsWriterPlugin} from 'webpack-stats-plugin';
 import {ROOT_DIR} from '../config';
 

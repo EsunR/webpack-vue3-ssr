@@ -12,10 +12,8 @@ service.interceptors.request.use(config => {
     return config;
 });
 
-service.interceptors.response.use(
-    response => {
-        return response;
-    },
-);
+service.interceptors.response.use(response => {
+    return response;
+});
 
 export default service;

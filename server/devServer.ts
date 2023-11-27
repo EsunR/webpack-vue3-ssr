@@ -35,7 +35,7 @@ function onServerBuildSuccess() {
     log('success', '[Webpack] Server build success');
     log('success', `[Webpack] SSR service running on ${chalk.green.underline(`http://localhost:${SSR_SERVER_PORT}`)}`);
     serverManifest = JSON.parse(mfs.readFileSync(path.join(serverOutputPath, 'manifest.json'), 'utf-8'));
-    mainJsContent = mfs.readFileSync(path.join(serverOutputPath, serverManifest['main.js']), 'utf-8');
+    mainJsContent = mfs.readFileSync(path.join(serverOutputPath, (serverManifest as any)['main.js']), 'utf-8');
     createApp = createCJSModelInVm(mainJsContent).default as any as CreateServerAppInstanceFunc;
 }
 
