@@ -1,13 +1,11 @@
-<script lang="ts">
-export default {
-    name: 'NewsPage',
-};
-</script>
-
 <script lang="ts" setup>
 import {storeToRefs} from 'pinia';
 import {useNewsStore} from '@/store/news';
 import {onMounted, onServerPrefetch, onUnmounted} from 'vue';
+
+defineOptions({
+    name: 'NewsPage',
+});
 
 const newsStore = useNewsStore();
 const {news} = storeToRefs(newsStore);

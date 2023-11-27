@@ -1,15 +1,18 @@
+/**
+ * 构建服务端渲染 App 的配置
+ */
 import path from 'path';
 import webpack from 'webpack';
 import {merge} from 'webpack-merge';
 import nodeExternals from 'webpack-node-externals';
-import {ENV_DEFINE, IS_DEV, ROOT_DIR} from './config';
+import {ENV_DEFINE, IS_DEV, ROOT_DIR} from '../config';
 import commonConfig from './webpack.common';
 
 const config = merge(commonConfig, {
     target: 'node',
     mode: IS_DEV ? 'development' : 'production',
     devtool: false,
-    entry: path.resolve(ROOT_DIR, './src/entry/server.ts'),
+    entry: path.resolve(ROOT_DIR, './app/entry/server.ts'),
     output: {
         path: path.resolve(ROOT_DIR, './dist/server'),
         clean: true,

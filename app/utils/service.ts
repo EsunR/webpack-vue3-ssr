@@ -6,6 +6,7 @@ const service = axios.create({});
 
 service.interceptors.request.use(config => {
     if (IS_NODE) {
+        // 服务端预取数据时的设置
         config.baseURL = `http://localhost:${SSR_SERVER_PORT}`;
     }
     return config;

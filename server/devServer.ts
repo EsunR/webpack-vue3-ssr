@@ -6,8 +6,8 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import {merge} from 'webpack-merge';
-import clientConfig from '../webpack/webpack.client';
-import serverConfig from '../webpack/webpack.server';
+import clientConfig from '../webpack/app/webpack.client';
+import serverConfig from '../webpack/app/webpack.server';
 import {SSR_SERVER_PORT} from './config';
 import commonMiddleware from './middleware/common';
 import {CreateServerAppInstanceFunc, IWebpackStats} from './types';
@@ -47,7 +47,6 @@ function onClientBuildSuccess() {
 // 执行 webpack 构建
 const clientCompiler = webpack(
     merge(clientConfig, {
-        devServer: undefined,
         entry: [clientConfig.entry as string, 'webpack-hot-middleware/client'],
         watchOptions: {
             ignored: ['node_modules', 'server'],

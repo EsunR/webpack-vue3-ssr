@@ -1,16 +1,19 @@
+/**
+ * 构建客户端渲染 App 的配置
+ */
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import webpack from 'webpack';
 import {merge} from 'webpack-merge';
-import {ENV_DEFINE, IS_DEV, ROOT_DIR} from './config';
+import {ENV_DEFINE, IS_DEV, ROOT_DIR} from '../config';
 import commonConfig from './webpack.common';
 
 const config = merge(commonConfig, {
     target: 'web',
     mode: IS_DEV ? 'development' : 'production',
     devtool: IS_DEV ? 'source-map' : false,
-    entry: path.resolve(ROOT_DIR, './src/entry/client.ts'),
+    entry: path.resolve(ROOT_DIR, './app/entry/client.ts'),
     output: {
         path: path.resolve(ROOT_DIR, './dist/client'),
         clean: true,

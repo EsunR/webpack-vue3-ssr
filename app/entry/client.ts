@@ -3,7 +3,9 @@ import 'normalize.css';
 
 const {app, router, pinia} = createAppInstance();
 
-pinia.state.value = (window as any).__PINIA_STATE__;
+if (window.__INIT_STATE__) {
+    pinia.state.value = window.__INIT_STATE__;
+}
 
 /**
  * 客户端挂载路由需要手动等待路由准备就绪

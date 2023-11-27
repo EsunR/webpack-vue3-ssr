@@ -63,6 +63,8 @@ export function handleSSR(options: IHandleSSROptions) {
             } catch (error) {
                 log('error', '服务端渲染失败\n', error);
             }
+        } else {
+            log('debug', '跳过服务端渲染');
         }
 
         res.send(html);
@@ -89,6 +91,6 @@ async function renderHTML(options: IRenderHTMLOptions) {
         .replace('<!-- css-preload-links -->', `${preloadLinks.css}`)
         .replace('<!-- js-preload-links -->', `${preloadLinks.js}`)
         .replace('<!-- app-html -->', `${appContent}`)
-        .replace('<!-- app-state -->', `<script>window.__PINIA_STATE__ = ${devalue(pinia.state.value)}</script>`);
+        .replace('<!-- app-state -->', `<script>window.__INIT_STATE__ = ${devalue(pinia.state.value)}</script>`);
     return html;
 }

@@ -2,15 +2,14 @@ import path from 'path';
 import webpack from 'webpack';
 import nodeExternals from 'webpack-node-externals';
 import CopyPlugin from 'copy-webpack-plugin';
-
-const rootDir = path.resolve(__dirname, '../');
+import {ROOT_DIR} from '../config';
 
 const config: webpack.Configuration = {
     mode: 'none',
     target: 'node',
-    entry: './server/index.ts',
+    entry: path.join(ROOT_DIR, 'server/index.ts'),
     output: {
-        path: path.resolve(rootDir, 'dist'),
+        path: path.resolve(ROOT_DIR, 'dist'),
         clean: true,
         filename: 'server.js',
     },
@@ -35,12 +34,12 @@ const config: webpack.Configuration = {
         new CopyPlugin({
             patterns: [
                 {
-                    from: path.resolve(rootDir, 'package.json'),
-                    to: path.resolve(rootDir, 'dist'),
+                    from: path.resolve(ROOT_DIR, 'package.json'),
+                    to: path.resolve(ROOT_DIR, 'dist'),
                 },
                 {
-                    from: path.resolve(rootDir, 'package-lock.json'),
-                    to: path.resolve(rootDir, 'dist'),
+                    from: path.resolve(ROOT_DIR, 'package-lock.json'),
+                    to: path.resolve(ROOT_DIR, 'dist'),
                 },
             ],
         }),

@@ -1,16 +1,19 @@
+/**
+ * CSR 和 SSR 共用的 Webpack 配置
+ */
 import path from 'path';
 import {VueLoaderPlugin} from 'vue-loader';
 import webpack from 'webpack';
 import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
 import {StatsWriterPlugin} from 'webpack-stats-plugin';
-import {IS_DEV, ROOT_DIR} from './config';
+import {ROOT_DIR} from '../config';
 
 const config: webpack.Configuration = {
     mode: 'production',
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
         alias: {
-            '@': path.resolve(ROOT_DIR, './src'),
+            '@': path.resolve(ROOT_DIR, './app'),
             '@server': path.resolve(ROOT_DIR, './server'),
         },
     },
