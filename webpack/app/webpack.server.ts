@@ -46,7 +46,10 @@ const config = merge(commonConfig, {
         splitChunks: false,
     },
     externalsPresets: {node: true},
-    externals: [nodeExternals()],
+    externals: [
+        // 服务端渲染不打包 node_modules
+        nodeExternals()
+    ],
 });
 
 export default config;

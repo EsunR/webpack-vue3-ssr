@@ -1,3 +1,6 @@
+/**
+ * 构建服务端代码的配置
+ */
 import path from 'path';
 import webpack from 'webpack';
 import nodeExternals from 'webpack-node-externals';
