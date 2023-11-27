@@ -1,7 +1,6 @@
 import {Request} from 'express';
-import createServerAppInstance from '../../app/entry/server';
 
-export type CreateServerAppInstanceFunc = typeof createServerAppInstance;
+export type CreateServerAppInstanceFunc = (ctx: any) => any;
 
 export interface IHandleSSROptions {
     template: string;

@@ -9,10 +9,11 @@
 	},
 	"scripts": {
 		"dev": "cross-env NODE_ENV=development nodemon ./server/devServer.ts",
-		"build": "npm run build:node && npm run build:client && npm run build:server",
+		"build": "npm run build:node:tsc && npm run build:client && npm run build:server",
 		"build:client": "cross-env NODE_ENV=production webpack --config ./webpack/app/webpack.client.ts",
 		"build:server": "cross-env NODE_ENV=production webpack --config ./webpack/app/webpack.server.ts",
-		"build:node": "cross-env NODE_ENV=production webpack --config ./webpack/server/webpack.ts"
+		"build:node:webpack": "cross-env NODE_ENV=production webpack --config ./webpack/server/webpack.ts",
+		"build:node:tsc": "rm -rf dist && cross-env NODE_ENV=production tsc -p ./server/tsconfig.json"
 	},
 	"prodScripts": {
 		"start": "node ./server.js"
