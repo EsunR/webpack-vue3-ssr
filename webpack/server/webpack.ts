@@ -18,18 +18,6 @@ const config: webpack.Configuration = {
         path: path.resolve(ROOT_DIR, 'dist'),
         clean: true,
         filename: '[name].js',
-        // 打包为 cmd
-        library: {
-            type: 'commonjs2',
-            export: 'default',
-        },
-        iife: false,
-    },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-            minSize: 0,
-        },
     },
     module: {
         rules: [
