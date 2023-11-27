@@ -53,18 +53,18 @@ export function handleSSR(options: IHandleSSROptions) {
         let html = template;
 
         if (!isCsr) {
+            const startTime = new Date().valueOf();
             try {
-                const startTime = new Date().valueOf();
-                log('debug', '服务端渲染中...');
+                log('info', `${req.path} 触发服务端渲染`);
                 html = await renderHTML({req, ...options});
-                const endTime = new Date().valueOf();
-                log('debug', `服务端渲染成功，耗时 ${endTime - startTime}ms`);
                 logMemoryUse();
             } catch (error) {
                 log('error', '服务端渲染失败\n', error);
+            } finally {
+                log('debug', `SSR 耗时 ${new Date().valueOf() - startTime}ms`);
             }
         } else {
-            log('debug', '跳过服务端渲染');
+            log('debug', `${req.path} 跳过服务端渲染`);
         }
 
         res.send(html);
@@ -86,11 +86,30 @@ async function renderHTML(options: IRenderHTMLOptions) {
         path: req.url,
         ua: req.get('User-Agent'),
     };
-    const appContent = await renderToString(app, ssrContext);
-    const html = template
-        .replace('<!-- css-preload-links -->', `${preloadLinks.css}`)
-        .replace('<!-- js-preload-links -->', `${preloadLinks.js}`)
-        .replace('<!-- app-html -->', `${appContent}`)
-        .replace('<!-- app-state -->', `<script>window.__INIT_STATE__ = ${devalue(pinia.state.value)}</script>`);
-    return html;
+
+    let timeout: NodeJS.Timeout;
+    const timeoutPromise = new Promise((_, reject) => {
+        timeout = setTimeout(() => {
+            clearTimeout(timeout);
+            reject(new Error('SSR 超时'));
+        }, 5000);
+    });
+
+    const renderPromise = renderToString(app, ssrContext);
+
+    try {
+        const appContent = await Promise.race([renderPromise, timeoutPromise]);
+        // @ts-ignore
+        clearTimeout(timeout);
+        const html = template
+            .replace('<!-- css-preload-links -->', `${preloadLinks.css}`)
+            .replace('<!-- js-preload-links -->', `${preloadLinks.js}`)
+            .replace('<!-- app-html -->', `${appContent}`)
+            .replace('<!-- app-state -->', `<script>window.__INIT_STATE__ = ${devalue(pinia.state.value)}</script>`);
+        return html;
+    } catch (error) {
+        // @ts-ignore
+        clearTimeout(timeout);
+        throw error;
+    }
 }

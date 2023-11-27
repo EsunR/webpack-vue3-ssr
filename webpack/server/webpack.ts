@@ -36,6 +36,15 @@ const config: webpack.Configuration = {
                 {
                     from: path.resolve(ROOT_DIR, 'package.json'),
                     to: path.resolve(ROOT_DIR, 'dist'),
+                    transform: content => {
+                        // 修改 package.json 内容
+                        const data = JSON.parse(content.toString());
+                        data.main = 'server.js';
+                        data.scripts = data.prodScripts;
+                        delete data.prodScripts;
+                        delete data.devDependencies;
+                        return JSON.stringify(data, null, 2);
+                    },
                 },
                 {
                     from: path.resolve(ROOT_DIR, 'package-lock.json'),

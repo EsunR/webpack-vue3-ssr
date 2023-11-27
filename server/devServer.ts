@@ -8,15 +8,16 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import {merge} from 'webpack-merge';
 import clientConfig from '../webpack/app/webpack.client';
 import serverConfig from '../webpack/app/webpack.server';
-import {SSR_SERVER_PORT} from './config';
+import {NO_MATCH_SSR_REG, SSR_SERVER_PORT, USE_MFS} from './config';
 import commonMiddleware from './middleware/common';
 import {CreateServerAppInstanceFunc, IWebpackStats} from './types';
 import {createCJSModelInVm} from './utils';
 import {log} from './utils/log';
 import {WebpackBuildCbPlugin} from './utils/plugin';
 import {handleSSR} from './utils/render';
+import fs from 'fs';
 
-const mfs = new MFS();
+const mfs = USE_MFS ? new MFS() : fs;
 
 const clientOutputPath = clientConfig.output?.path as string;
 const serverOutputPath = serverConfig.output?.path as string;
@@ -62,12 +63,14 @@ const serverCompiler = webpack(
 );
 
 const clientWpMiddleware = webpackDevMiddleware(clientCompiler, {
-    outputFileSystem: mfs as any,
+    outputFileSystem: USE_MFS ? (mfs as any) : undefined,
+    writeToDisk: USE_MFS ? false : true,
     index: false,
 });
 
 const serverWpMiddleware = webpackDevMiddleware(serverCompiler, {
-    outputFileSystem: mfs as any,
+    outputFileSystem: USE_MFS ? (mfs as any) : undefined,
+    writeToDisk: USE_MFS ? false : true,
     index: false,
 });
 
@@ -89,6 +92,10 @@ app.use(webpackHotMiddleware(clientCompiler));
 commonMiddleware(app);
 
 app.get('*', async (req, res, next) => {
+    if (NO_MATCH_SSR_REG.exec(req.url)) {
+        next();
+        return;
+    }
     handleSSR({template: clientTemplate, createApp, clientWpStats})(req, res, next);
 });
 

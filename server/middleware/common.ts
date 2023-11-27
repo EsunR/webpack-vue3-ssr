@@ -24,7 +24,7 @@ export default function commonMiddleware(app: Express) {
                 timeout: 5 * 1000,
                 logLevel: 'error',
                 onProxyReq(proxyReq, req) {
-                    log('info', `[Node Proxy] onProxyReq: ${req?.url} => ${option.target}`);
+                    log('debug', `[Node Proxy] 请求代理: ${req?.url} => ${option.target}`);
                     return fixRequestBody(proxyReq, req);
                 },
                 onError: err => {

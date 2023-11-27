@@ -4,12 +4,18 @@
 	"private": "true",
 	"author": "EsunR <esunr641@icloud.com>",
 	"license": "MIT",
+	"engines": {
+		"node": ">=16.0.0"
+	},
 	"scripts": {
 		"dev": "cross-env NODE_ENV=development nodemon ./server/devServer.ts",
 		"build": "npm run build:node && npm run build:client && npm run build:server",
 		"build:client": "cross-env NODE_ENV=production webpack --config ./webpack/app/webpack.client.ts",
 		"build:server": "cross-env NODE_ENV=production webpack --config ./webpack/app/webpack.server.ts",
 		"build:node": "cross-env NODE_ENV=production webpack --config ./webpack/server/webpack.ts"
+	},
+	"prodScripts": {
+		"start": "node ./server.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.19.1",

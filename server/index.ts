@@ -4,7 +4,7 @@ import {CreateServerAppInstanceFunc} from './types';
 import express from 'express';
 import commonMiddleware from './middleware/common';
 import {handleSSR} from './utils/render';
-import {SSR_SERVER_PORT} from './config';
+import {NO_MATCH_SSR_REG, SSR_SERVER_PORT} from './config';
 import {log} from './utils/log';
 
 const CLIENT_PATH = 'client';
@@ -22,6 +22,10 @@ const createApp = __non_webpack_require__(mainJsPath).default as any as CreateSe
 commonMiddleware(app);
 
 app.get('*', async (req, res, next) => {
+    if (NO_MATCH_SSR_REG.exec(req.url)) {
+        next();
+        return;
+    }
     handleSSR({template: clientTemplate, createApp, clientWpStats})(req, res, next);
 });
 
