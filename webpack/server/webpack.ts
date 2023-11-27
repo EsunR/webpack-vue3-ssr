@@ -10,11 +10,14 @@ import {ROOT_DIR} from '../config';
 const config: webpack.Configuration = {
     mode: 'none',
     target: 'node',
-    entry: path.join(ROOT_DIR, 'server/index.ts'),
+    entry: {
+        server: path.join(ROOT_DIR, 'server/server.ts'),
+        'api/vercel': path.join(ROOT_DIR, 'server/api/vercel.ts'),
+    },
     output: {
         path: path.resolve(ROOT_DIR, 'dist'),
         clean: true,
-        filename: 'server.js',
+        filename: '[name].js',
     },
     module: {
         rules: [
@@ -31,7 +34,7 @@ const config: webpack.Configuration = {
         ],
     },
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.ts', '.js'],
     },
     plugins: [
         new CopyPlugin({
@@ -51,6 +54,10 @@ const config: webpack.Configuration = {
                 },
                 {
                     from: path.resolve(ROOT_DIR, 'package-lock.json'),
+                    to: path.resolve(ROOT_DIR, 'dist'),
+                },
+                {
+                    from: path.resolve(ROOT_DIR, 'vercel.json'),
                     to: path.resolve(ROOT_DIR, 'dist'),
                 },
             ],

@@ -1,5 +1,5 @@
 import {Request} from 'express';
-import createServerAppInstance from '../app/entry/server';
+import createServerAppInstance from '../../app/entry/server';
 
 export type CreateServerAppInstanceFunc = typeof createServerAppInstance;
 
