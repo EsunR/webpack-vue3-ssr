@@ -2,7 +2,7 @@
     "routes": [
         {
             "src": "/(.+)",
-            "dest": "/vercelDist/client/static/$1"
+            "dest": "/vercelDist/client/$1"
         },
         {
             "src": "/.*",
