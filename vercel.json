@@ -3,10 +3,6 @@
         {
             "src": "/(.+)",
             "dest": "/vercelDist/client/$1"
-        },
-        {
-            "src": "/.*",
-            "dest": "/api/vercel.js"
         }
     ]
 }
