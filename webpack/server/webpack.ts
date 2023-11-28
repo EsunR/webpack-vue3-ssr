@@ -12,6 +12,7 @@ const config: webpack.Configuration = {
     target: 'node',
     entry: {
         server: path.join(ROOT_DIR, 'server/server.ts'),
+        'api/vercel': path.join(ROOT_DIR, 'server/api/vercel.ts'),
     },
     output: {
         path: path.resolve(ROOT_DIR, 'dist'),
@@ -58,6 +59,10 @@ const config: webpack.Configuration = {
                 },
                 {
                     from: path.resolve(ROOT_DIR, 'package-lock.json'),
+                    to: path.resolve(ROOT_DIR, 'dist'),
+                },
+                {
+                    from: path.resolve(ROOT_DIR, 'vercel.json'),
                     to: path.resolve(ROOT_DIR, 'dist'),
                 },
             ],
