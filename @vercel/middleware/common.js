@@ -11,8 +11,6 @@ const path_1 = __importDefault(require("path"));
 const APP_ENV = process.env.APP_ENV || 'dev';
 function commonMiddleware(app) {
     app.enable('trust proxy');
-    console.log(process.env.VERCEL ? path_1.default.resolve(__dirname, '../client') : 'client');
-    
     app.use(express_1.default.static(process.env.VERCEL ? path_1.default.resolve(__dirname, '../client') : 'client', {
         index: false,
     }));
