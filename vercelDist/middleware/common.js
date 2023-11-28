@@ -13,8 +13,10 @@ const path = require('path');
 const APP_ENV = process.env.APP_ENV || 'dev';
 function commonMiddleware(app) {
     app.enable('trust proxy');
+    console.log(path.resolve(__dirname, '../client/'));
+
     app.use(
-        express_1.default.static(process.env.VERCEL ? path.resolve(__dirname, '../client/') : 'client', {
+        express_1.default.static('client', {
             index: false,
         })
     );

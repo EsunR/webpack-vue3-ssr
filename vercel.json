@@ -1,6 +1,10 @@
 {
     "routes": [
         {
+            "src": "/client/.*",
+            "dest": "/vercelDist/client/$1"
+        },
+        {
             "src": "/.*",
             "dest": "/api/vercel.js"
         }
