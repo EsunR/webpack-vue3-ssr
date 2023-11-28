@@ -24,3 +24,5 @@ export default async function createServerAppInstance(ctx: Ctx) {
         pinia,
     };
 }
+
+export type CreateServerAppInstanceFunc = typeof createServerAppInstance;
