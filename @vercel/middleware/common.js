@@ -10,7 +10,7 @@ const log_1 = require("../utils/log");
 const APP_ENV = process.env.APP_ENV || 'dev';
 function commonMiddleware(app) {
     app.enable('trust proxy');
-    app.use(express_1.default.static(process.env.VERCEL ? 'vercelDist/client' : 'client', {
+    app.use(express_1.default.static(process.env.VERCEL ? '@vercel/client' : 'client', {
         index: false,
     }));
     const needProxyPaths = Object.keys(config_1.PROXIES[APP_ENV] || {});

@@ -9,7 +9,7 @@ export default function commonMiddleware(app: Express) {
     app.enable('trust proxy');
 
     app.use(
-        express.static(process.env.VERCEL ? 'vercelDist/client' : 'client', {
+        express.static(process.env.VERCEL ? '@vercel/client' : 'client', {
             index: false,
         })
     );
