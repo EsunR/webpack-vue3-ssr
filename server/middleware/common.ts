@@ -8,8 +8,6 @@ const APP_ENV = process.env.APP_ENV || 'dev';
 export default function commonMiddleware(app: Express) {
     app.enable('trust proxy');
 
-    console.log(process.env.VERCEL);
-    console.log(process.env.VERCEL ? 'vercelDist/client' : 'client');
     app.use(
         express.static(process.env.VERCEL ? 'vercelDist/client' : 'client', {
             index: false,
