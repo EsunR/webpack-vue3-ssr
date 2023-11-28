@@ -10,7 +10,7 @@ const http_proxy_middleware_1 = require('http-proxy-middleware');
 const config_1 = require('../config');
 const log_1 = require('../utils/log');
 const path = require('path');
-const path_1 = __importDefault(require('path'));
+const fs = require('fs');
 const APP_ENV = process.env.APP_ENV || 'dev';
 function commonMiddleware(app) {
     app.enable('trust proxy');
