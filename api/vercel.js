@@ -1,2 +1,2 @@
-const app = require('../@vercel/server');
+const app = require('../@vercel/app');
 module.exports = app;
