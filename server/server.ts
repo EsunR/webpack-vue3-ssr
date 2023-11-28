@@ -10,7 +10,7 @@ import {log} from './utils/log';
 const CLIENT_PATH = 'client';
 const SERVER_PATH = 'server';
 
-export const app = express();
+const app = express();
 
 const serverManifest = JSON.parse(fs.readFileSync(path.resolve(__dirname, SERVER_PATH, 'manifest.json'), 'utf-8'));
 const clientTemplate = fs.readFileSync(path.resolve(__dirname, CLIENT_PATH, 'index.html'), 'utf-8');
@@ -32,3 +32,5 @@ app.get('*', async (req, res, next) => {
 app.listen(SSR_SERVER_PORT, () => {
     log('success', `Server is listening on port ${SSR_SERVER_PORT}`);
 });
+
+export default app;
