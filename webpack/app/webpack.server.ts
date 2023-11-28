@@ -5,7 +5,7 @@ import path from 'path';
 import webpack from 'webpack';
 import {merge} from 'webpack-merge';
 import nodeExternals from 'webpack-node-externals';
-import {ENV_DEFINE, IS_DEV, ROOT_DIR} from '../config';
+import {ENV_DEFINE, IS_DEV, IS_VERCEL, ROOT_DIR} from '../config';
 import commonConfig from './webpack.common';
 
 const config = merge(commonConfig, {
@@ -14,7 +14,7 @@ const config = merge(commonConfig, {
     devtool: false,
     entry: path.resolve(ROOT_DIR, './app/entry/server.ts'),
     output: {
-        path: path.resolve(ROOT_DIR, './dist/server'),
+        path: path.resolve(ROOT_DIR, IS_VERCEL ? '@vercel/server' : 'dist/server'),
         clean: true,
         filename: 'static/js/[name].[contenthash:8].js',
         libraryTarget: 'commonjs2',
@@ -48,7 +48,7 @@ const config = merge(commonConfig, {
     externalsPresets: {node: true},
     externals: [
         // 服务端渲染不打包 node_modules
-        nodeExternals()
+        nodeExternals(),
     ],
 });
 

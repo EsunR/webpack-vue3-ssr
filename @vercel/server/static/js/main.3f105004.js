@@ -22,9 +22,9 @@ const router_1 = __webpack_require__(88);
 __webpack_require__(979);
 const vue_1 = __webpack_require__(734);
 const pinia_1 = __webpack_require__(545);
-const ssr_1 = __webpack_require__(453);
+const const_1 = __webpack_require__(966);
 function createAppInstance() {
-    const needHydration = !ssr_1.IS_NODE && !!window.__INIT_STATE__;
+    const needHydration = !const_1.IS_NODE && !!window.__INIT_STATE__;
     // 如果服务端渲染失败或者跳过渲染，就使用 createApp 创建客户端实例
     const app = needHydration ? (0, vue_1.createSSRApp)(App_vue_1.default) : (0, vue_1.createApp)(App_vue_1.default);
     const pinia = (0, pinia_1.createPinia)();
@@ -250,6 +250,19 @@ exports.useNewsStore = (0, pinia_1.defineStore)('news', {
 
 /***/ }),
 
+/***/ 966:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.IS_VERCEL_RUNTIME = exports.IS_NODE = void 0;
+exports.IS_NODE =  true || (0);
+exports.IS_VERCEL_RUNTIME = !!process.env.VERCEL;
+
+
+/***/ }),
+
 /***/ 321:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -260,13 +273,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const axios_1 = __importDefault(__webpack_require__(167));
-const ssr_1 = __webpack_require__(453);
+const const_1 = __webpack_require__(966);
 const config_1 = __webpack_require__(281);
+const const_2 = __webpack_require__(966);
 const service = axios_1.default.create({});
 service.interceptors.request.use(config => {
-    if (ssr_1.IS_NODE) {
+    if (const_1.IS_NODE) {
         // 服务端预取数据时的设置
-        config.baseURL = `http://localhost:${config_1.SSR_SERVER_PORT}`;
+        if (const_2.IS_VERCEL_RUNTIME) {
+            config.baseURL = `https://${process.env.VERCEL_URL}}`;
+        }
+        else {
+            config.baseURL = `http://localhost:${config_1.SSR_SERVER_PORT}`;
+        }
     }
     return config;
 });
@@ -274,18 +293,6 @@ service.interceptors.response.use(response => {
     return response;
 });
 exports["default"] = service;
-
-
-/***/ }),
-
-/***/ 453:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IS_NODE = void 0;
-exports.IS_NODE =  true || (0);
 
 
 /***/ }),

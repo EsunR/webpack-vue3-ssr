@@ -3,7 +3,7 @@ import {createRouterInstance} from '@/router';
 import '@/styles/global.css';
 import {createApp, createSSRApp} from 'vue';
 import {createPinia} from 'pinia';
-import {IS_NODE} from '@/utils/ssr';
+import {IS_NODE} from '@/utils/const';
 
 export default function createAppInstance() {
     const needHydration = !IS_NODE && !!window.__INIT_STATE__;

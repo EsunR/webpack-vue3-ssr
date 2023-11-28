@@ -10,7 +10,7 @@
 	"scripts": {
 		"dev": "cross-env NODE_ENV=development nodemon ./server/devServer.ts",
 		"build": "npm run build:node:webpack && npm run build:client && npm run build:server",
-		"build:vercel": "npm run build:node:tsc && npm run build:client && npm run build:server",
+		"build:vercel": "cross-env PLATFORM=vercel npm run build:node:webpack && cross-env PLATFORM=vercel npm run build:client && cross-env PLATFORM=vercel npm run build:server",
 		"build:empty": "echo 'build:empty'",
 		"build:client": "cross-env NODE_ENV=production webpack --config ./webpack/app/webpack.client.ts",
 		"build:server": "cross-env NODE_ENV=production webpack --config ./webpack/app/webpack.server.ts",

@@ -6,7 +6,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import webpack from 'webpack';
 import {merge} from 'webpack-merge';
-import {ENV_DEFINE, IS_DEV, ROOT_DIR} from '../config';
+import {ENV_DEFINE, IS_DEV, IS_VERCEL, ROOT_DIR} from '../config';
 import commonConfig from './webpack.common';
 
 const config = merge(commonConfig, {
@@ -15,7 +15,7 @@ const config = merge(commonConfig, {
     devtool: IS_DEV ? 'source-map' : false,
     entry: path.resolve(ROOT_DIR, './app/entry/client.ts'),
     output: {
-        path: path.resolve(ROOT_DIR, './dist/client'),
+        path: path.resolve(ROOT_DIR, IS_VERCEL ? '@vercel/client' : 'dist/client'),
         clean: true,
         filename: 'static/js/[name].[contenthash:8].js',
         chunkFilename: 'static/js/[name].[contenthash:8].js',
