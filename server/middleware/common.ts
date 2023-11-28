@@ -2,6 +2,7 @@ import express, {Express} from 'express';
 import {createProxyMiddleware, fixRequestBody} from 'http-proxy-middleware';
 import {PROXIES} from '../config';
 import {log} from '../utils/log';
+import path from 'path';
 
 const APP_ENV = process.env.APP_ENV || 'dev';
 
@@ -9,7 +10,7 @@ export default function commonMiddleware(app: Express) {
     app.enable('trust proxy');
 
     app.use(
-        express.static('client', {
+        express.static(path.resolve(__dirname, 'client'), {
             index: false,
         })
     );
