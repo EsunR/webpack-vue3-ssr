@@ -1,16 +1,16 @@
 {
     "builds": [
         {
-            "src": "*.html",
-            "use": "@vercel"
+            "src": "@vercel/client/**/*.html",
+            "use": "@vercel/static"
         },
         {
-            "src": "*.css",
-            "use": "@vercel"
+            "src": "@vercel/client/**/*.js",
+            "use": "@vercel/static"
         },
         {
-            "src": "*.js",
-            "use": "@vercel"
+            "src": "@vercel/client/**/*.css",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
