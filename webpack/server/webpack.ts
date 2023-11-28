@@ -12,7 +12,6 @@ const config: webpack.Configuration = {
     target: 'node',
     entry: {
         server: path.join(ROOT_DIR, 'server/server.ts'),
-        'api/vercel': path.join(ROOT_DIR, 'server/api/vercel.ts'),
     },
     output: {
         path: path.resolve(ROOT_DIR, 'dist'),
