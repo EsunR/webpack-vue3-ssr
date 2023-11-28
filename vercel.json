@@ -1,8 +1,22 @@
 {
+    "builds": [
+        {
+            "src": "*.html",
+            "use": "@vercel"
+        },
+        {
+            "src": "*.css",
+            "use": "@vercel"
+        },
+        {
+            "src": "*.js",
+            "use": "@vercel"
+        }
+    ],
     "routes": [
         {
-            "src": "/(.+)",
-            "dest": "/vercelDist/client/$1"
+            "src": "/.*",
+            "dest": "/api/vercel.js"
         }
     ]
 }

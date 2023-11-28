@@ -16,7 +16,7 @@ function commonMiddleware(app) {
     console.log(path.resolve(__dirname, '../client/'));
 
     app.use(
-        express_1.default.static('client', {
+        express_1.default.static(path.join(__dirname, "../client"), {
             index: false,
         })
     );
