@@ -12,21 +12,21 @@ export const NO_MATCH_SSR_REG = /^\/(auth|api|static|proxy|openapi|nodeapi|__web
 export const PROXIES: {[env: string]: {[path: string]: Options}} = {
     dev: {
         '/rsshub': {
-            target: 'https://rsshub.app',
+            target: 'https://rss.esunr.xyz',
             pathRewrite: {'^/rsshub': ''},
             changeOrigin: true,
         },
     },
     preonline: {
         '/rsshub': {
-            target: 'https://rsshub.app',
+            target: 'https://rss.esunr.xyz',
             pathRewrite: {'^/rsshub': ''},
             changeOrigin: true,
         },
     },
     online: {
         '/rsshub': {
-            target: 'https://rsshub.app',
+            target: 'https://rss.esunr.xyz',
             pathRewrite: {'^/rsshub': ''},
             changeOrigin: true,
         },

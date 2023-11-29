@@ -17,7 +17,8 @@ const clientTemplate = fs_1.default.readFileSync(path_1.default.resolve(__dirnam
 const clientWpStats = JSON.parse(fs_1.default.readFileSync(path_1.default.resolve(__dirname, CLIENT_PATH, 'stats.json'), 'utf-8'));
 const mainJsPath = path_1.default.resolve(__dirname, SERVER_PATH, serverManifest['main.js']);
 // @ts-ignore
-const createApp = require(mainJsPath).default;
+const requireMethod = __non_webpack_require__ || require;
+const createApp = requireMethod(mainJsPath).default;
 (0, common_1.default)(app);
 app.get('*', async (req, res, next) => {
     if (config_1.NO_MATCH_SSR_REG.exec(req.url)) {
