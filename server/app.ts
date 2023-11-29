@@ -16,7 +16,7 @@ const clientTemplate = fs.readFileSync(path.resolve(__dirname, CLIENT_PATH, 'ind
 const clientWpStats = JSON.parse(fs.readFileSync(path.resolve(__dirname, CLIENT_PATH, 'stats.json'), 'utf-8'));
 const mainJsPath = path.resolve(__dirname, SERVER_PATH, serverManifest['main.js']);
 // @ts-ignore
-const requireMethod = __non_webpack_require__ || require;
+const requireMethod = process.env.VERCEL ? require : __non_webpack_require__;
 const createApp = requireMethod(mainJsPath).default as any as CreateServerAppInstanceFunc;
 
 commonMiddleware(app);
