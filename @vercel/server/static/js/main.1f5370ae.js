@@ -256,9 +256,8 @@ exports.useNewsStore = (0, pinia_1.defineStore)('news', {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.IS_VERCEL_RUNTIME = exports.IS_NODE = void 0;
+exports.IS_NODE = void 0;
 exports.IS_NODE =  true || (0);
-exports.IS_VERCEL_RUNTIME = !!process.env.VERCEL;
 
 
 /***/ }),
@@ -275,12 +274,11 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const axios_1 = __importDefault(__webpack_require__(167));
 const const_1 = __webpack_require__(966);
 const config_1 = __webpack_require__(281);
-const const_2 = __webpack_require__(966);
 const service = axios_1.default.create({});
 service.interceptors.request.use(config => {
     if (const_1.IS_NODE) {
         // 服务端预取数据时的设置
-        if (const_2.IS_VERCEL_RUNTIME) {
+        if (process.env.VERCEL) {
             config.baseURL = `https://${process.env.VERCEL_URL}`;
         }
         else {

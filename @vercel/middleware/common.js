@@ -12,7 +12,6 @@ const APP_ENV = process.env.APP_ENV || 'dev';
 function commonMiddleware(app) {
     app.enable('trust proxy');
     const vercelStaticPath = path_1.default.resolve(__dirname, '../client');
-    (0, log_1.log)('debug', `vercelStaticPath: ${vercelStaticPath}`);
     app.use(express_1.default.static(process.env.VERCEL ? vercelStaticPath : 'client', {
         index: false,
     }));

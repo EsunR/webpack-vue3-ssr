@@ -1,14 +1,13 @@
 import axios from 'axios';
 import {IS_NODE} from './const';
 import {SSR_SERVER_PORT} from '@server/config';
-import {IS_VERCEL_RUNTIME} from './const';
 
 const service = axios.create({});
 
 service.interceptors.request.use(config => {
     if (IS_NODE) {
         // 服务端预取数据时的设置
-        if (IS_VERCEL_RUNTIME) {
+        if (process.env.VERCEL) {
             config.baseURL = `https://${process.env.VERCEL_URL}`;
         } else {
             config.baseURL = `http://localhost:${SSR_SERVER_PORT}`;

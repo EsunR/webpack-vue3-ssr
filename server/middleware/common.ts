@@ -10,7 +10,6 @@ export default function commonMiddleware(app: Express) {
     app.enable('trust proxy');
 
     const vercelStaticPath = path.resolve(__dirname, '../client');
-    log('debug', `vercelStaticPath: ${vercelStaticPath}`);
     app.use(
         express.static(process.env.VERCEL ? vercelStaticPath : 'client', {
             index: false,
