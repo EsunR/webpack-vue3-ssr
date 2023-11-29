@@ -34,7 +34,7 @@ export function logMemoryUse() {
     const messages: string[] = [];
     let currentRSSMemoryValue = 0;
     for (const key in used) {
-        const memoryValue = Math.round((used[key] / 1024 / 1024) * 100) / 100;
+        const memoryValue = Math.round(((used as any)[key] / 1024 / 1024) * 100) / 100;
         messages.push(`${key}: ${memoryValue} MB`);
         if (key === 'rss') {
             currentRSSMemoryValue = memoryValue;

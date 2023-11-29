@@ -1,0 +1,30 @@
+{
+    "builds": [
+        {
+            "src": "@vercel/**/*.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "api/**/*.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "@vercel/client/**/*.html",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "@vercel/client/**/*.js",
+            "use": "@vercel/static"
+        },
+        {
+            "src": "@vercel/client/**/*.css",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/.*",
+            "dest": "/api/vercel.js"
+        }
+    ]
+}

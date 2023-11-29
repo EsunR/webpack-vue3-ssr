@@ -6,17 +6,18 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import {merge} from 'webpack-merge';
-import clientConfig from '../webpack/webpack.client';
-import serverConfig from '../webpack/webpack.server';
-import {SSR_SERVER_PORT} from './config';
+import clientConfig from '../webpack/app/webpack.client';
+import serverConfig from '../webpack/app/webpack.server';
+import {NO_MATCH_SSR_REG, SSR_SERVER_PORT, USE_MFS} from './config';
 import commonMiddleware from './middleware/common';
 import {CreateServerAppInstanceFunc, IWebpackStats} from './types';
 import {createCJSModelInVm} from './utils';
 import {log} from './utils/log';
 import {WebpackBuildCbPlugin} from './utils/plugin';
 import {handleSSR} from './utils/render';
+import fs from 'fs';
 
-const mfs = new MFS();
+const mfs = USE_MFS ? new MFS() : fs;
 
 const clientOutputPath = clientConfig.output?.path as string;
 const serverOutputPath = serverConfig.output?.path as string;
@@ -34,7 +35,7 @@ function onServerBuildSuccess() {
     log('success', '[Webpack] Server build success');
     log('success', `[Webpack] SSR service running on ${chalk.green.underline(`http://localhost:${SSR_SERVER_PORT}`)}`);
     serverManifest = JSON.parse(mfs.readFileSync(path.join(serverOutputPath, 'manifest.json'), 'utf-8'));
-    mainJsContent = mfs.readFileSync(path.join(serverOutputPath, serverManifest['main.js']), 'utf-8');
+    mainJsContent = mfs.readFileSync(path.join(serverOutputPath, (serverManifest as any)['main.js']), 'utf-8');
     createApp = createCJSModelInVm(mainJsContent).default as any as CreateServerAppInstanceFunc;
 }
 
@@ -47,7 +48,6 @@ function onClientBuildSuccess() {
 // 执行 webpack 构建
 const clientCompiler = webpack(
     merge(clientConfig, {
-        devServer: undefined,
         entry: [clientConfig.entry as string, 'webpack-hot-middleware/client'],
         watchOptions: {
             ignored: ['node_modules', 'server'],
@@ -63,12 +63,14 @@ const serverCompiler = webpack(
 );
 
 const clientWpMiddleware = webpackDevMiddleware(clientCompiler, {
-    outputFileSystem: mfs as any,
+    outputFileSystem: USE_MFS ? (mfs as any) : undefined,
+    writeToDisk: USE_MFS ? false : true,
     index: false,
 });
 
 const serverWpMiddleware = webpackDevMiddleware(serverCompiler, {
-    outputFileSystem: mfs as any,
+    outputFileSystem: USE_MFS ? (mfs as any) : undefined,
+    writeToDisk: USE_MFS ? false : true,
     index: false,
 });
 
@@ -90,6 +92,10 @@ app.use(webpackHotMiddleware(clientCompiler));
 commonMiddleware(app);
 
 app.get('*', async (req, res, next) => {
+    if (NO_MATCH_SSR_REG.exec(req.url)) {
+        next();
+        return;
+    }
     handleSSR({template: clientTemplate, createApp, clientWpStats})(req, res, next);
 });
 
