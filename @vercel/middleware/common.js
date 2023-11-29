@@ -8,13 +8,12 @@ const http_proxy_middleware_1 = require("http-proxy-middleware");
 const config_1 = require("../config");
 const log_1 = require("../utils/log");
 const path_1 = __importDefault(require("path"));
-const path = require('path')
 const APP_ENV = process.env.APP_ENV || 'dev';
 function commonMiddleware(app) {
     app.enable('trust proxy');
-    console.log(path_1.default.resolve(__dirname, '../client'));
-    console.log(path.resolve(__dirname, '../client'));
-    app.use(express_1.default.static(process.env.VERCEL ? path_1.default.resolve(__dirname, '../client') : 'client', {
+    const vercelStaticPath = path_1.default.resolve(__dirname, '../client');
+    (0, log_1.log)('debug', `vercelStaticPath: ${vercelStaticPath}`);
+    app.use(express_1.default.static(process.env.VERCEL ? vercelStaticPath : 'client', {
         index: false,
     }));
     const needProxyPaths = Object.keys(config_1.PROXIES[APP_ENV] || {});
