@@ -27,4 +27,5 @@ app.get('*', async (req, res, next) => {
     }
     (0, render_1.handleSSR)({ template: clientTemplate, createApp, clientWpStats })(req, res, next);
 });
+console.log('VERCEL_URL', process.env.VERCEL_URL);
 exports.default = app;

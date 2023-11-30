@@ -7,8 +7,8 @@ const service = axios.create({});
 service.interceptors.request.use(config => {
     if (IS_NODE) {
         // 服务端预取数据时的设置
-        if (process.env.VERCEL) {
-            config.baseURL = `https://${process.env.VERCEL_URL}`;
+        if (process.env.BACKEND_URL) {
+            config.baseURL = process.env.BACKEND_URL;
         } else {
             config.baseURL = `http://localhost:${SSR_SERVER_PORT}`;
         }
