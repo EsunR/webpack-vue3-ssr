@@ -1,24 +1,19 @@
 <script lang="ts" setup>
-import {storeToRefs} from 'pinia';
 import {useNewsStore} from '@/store/news';
-import {onMounted, onUnmounted} from 'vue';
-import {safeOnServerPrefetch} from '@/hooks/safeOnServerPrefetch';
+import {onUnmounted} from 'vue';
+import useStoreRequest from '@/hooks/useStoreRequest';
+import {getNews} from '@/api/news';
 
 defineOptions({
     name: 'NewsPage',
 });
 
 const newsStore = useNewsStore();
-const {news} = storeToRefs(newsStore);
 
-safeOnServerPrefetch(async () => {
-    await newsStore.fetchNews();
-});
-
-onMounted(async () => {
-    if (!news?.value) {
-        await newsStore.fetchNews();
-    }
+const {data: news} = useStoreRequest({
+    fetchMethod: getNews,
+    store: newsStore,
+    stateKey: 'news',
 });
 
 onUnmounted(() => {

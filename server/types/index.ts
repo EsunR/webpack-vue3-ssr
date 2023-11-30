@@ -1,6 +1,9 @@
 import {Request} from 'express';
+import {Pinia} from 'pinia';
+import {App} from 'vue';
+import {Router} from 'vue-router';
 
-export type CreateServerAppInstanceFunc = (ctx: any) => any;
+export type CreateServerAppInstanceFunc = (ctx: {req: Request}) => {app: App<Element>; router: Router; pinia: Pinia};
 
 export interface IHandleSSROptions {
     template: string;

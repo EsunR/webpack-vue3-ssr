@@ -8,6 +8,66 @@
 
 /***/ }),
 
+/***/ 483:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getTest = void 0;
+const service_1 = __importDefault(__webpack_require__(321));
+function getTest() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (yield service_1.default.get('/api/test'));
+    });
+}
+exports.getTest = getTest;
+
+
+/***/ }),
+
+/***/ 451:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getNews = void 0;
+const service_1 = __importDefault(__webpack_require__(321));
+function getNews() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return (yield service_1.default.get('/rsshub/telegram/channel/testflightcn.json'));
+    });
+}
+exports.getNews = getNews;
+
+
+/***/ }),
+
 /***/ 498:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -147,6 +207,68 @@ exports["default"] = safeOnServerPrefetch;
 
 /***/ }),
 
+/***/ 247:
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useStoreRequest = void 0;
+const pinia_1 = __webpack_require__(545);
+const safeOnServerPrefetch_1 = __importDefault(__webpack_require__(387));
+const vue_1 = __webpack_require__(734);
+function useStoreRequest(option) {
+    const { fetchMethod, store, stateKey, initParams } = option;
+    const loading = (0, vue_1.ref)(false);
+    const getData = (params) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            loading.value = true;
+            const data = yield fetchMethod(params);
+            if (data) {
+                store.$state[stateKey] = data;
+            }
+            return data;
+        }
+        finally {
+            loading.value = false;
+        }
+    });
+    9;
+    (0, safeOnServerPrefetch_1.default)(() => __awaiter(this, void 0, void 0, function* () {
+        yield getData(initParams);
+    }));
+    (0, vue_1.onMounted)(() => __awaiter(this, void 0, void 0, function* () {
+        if (store.$state[stateKey]) {
+            return;
+        }
+        yield getData(initParams);
+    }));
+    (0, vue_1.onUnmounted)(() => {
+        store.$state[stateKey] = undefined;
+    });
+    return {
+        getData,
+        data: (0, pinia_1.storeToRefs)(store)[stateKey],
+    };
+}
+exports.useStoreRequest = useStoreRequest;
+exports["default"] = useStoreRequest;
+
+
+/***/ }),
+
 /***/ 88:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -212,39 +334,39 @@ exports.createRouterInstance = createRouterInstance;
 
 /***/ }),
 
-/***/ 258:
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+/***/ 618:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.useHomeStore = void 0;
+const pinia_1 = __webpack_require__(545);
+const vue_1 = __webpack_require__(734);
+exports.useHomeStore = (0, pinia_1.defineStore)('home', () => {
+    const time = (0, vue_1.ref)();
+    return {
+        time,
+    };
+});
+
+
+/***/ }),
+
+/***/ 258:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.useNewsStore = void 0;
-const service_1 = __importDefault(__webpack_require__(321));
 const pinia_1 = __webpack_require__(545);
-exports.useNewsStore = (0, pinia_1.defineStore)('news', {
-    state: () => ({
-        news: undefined,
-    }),
-    actions: {
-        fetchNews() {
-            return __awaiter(this, void 0, void 0, function* () {
-                const { data } = yield service_1.default.get('/rsshub/telegram/channel/testflightcn.json');
-                this.news = data;
-            });
-        },
-    },
+const vue_1 = __webpack_require__(734);
+exports.useNewsStore = (0, pinia_1.defineStore)('news', () => {
+    const news = (0, vue_1.ref)();
+    return {
+        news,
+    };
 });
 
 
@@ -288,7 +410,7 @@ service.interceptors.request.use(config => {
     return config;
 });
 service.interceptors.response.use(response => {
-    return response;
+    return response.data;
 });
 exports["default"] = service;
 
@@ -383,14 +505,23 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const vue_1 = __webpack_require__(734);
 const vue_2 = __webpack_require__(734);
 const server_renderer_1 = __webpack_require__(259);
+const home_1 = __webpack_require__(618);
 const Counter_vue_1 = __importDefault(__webpack_require__(815));
-const __default__ = {
+const useStoreRequest_1 = __importDefault(__webpack_require__(247));
+const home_2 = __webpack_require__(483);
+exports["default"] = (0, vue_1.defineComponent)(Object.assign({
     name: 'HomePage',
-};
-exports["default"] = (0, vue_1.defineComponent)(Object.assign(Object.assign({}, __default__), { __ssrInlineRender: true, setup(__props) {
+}, { __name: 'index', __ssrInlineRender: true, setup(__props) {
+        const homeStore = (0, home_1.useHomeStore)();
+        const { data: timeData } = (0, useStoreRequest_1.default)({
+            fetchMethod: home_2.getTest,
+            store: homeStore,
+            stateKey: 'time',
+        });
         return (_ctx, _push, _parent, _attrs) => {
+            var _a;
             const _component_RouterLink = (0, vue_2.resolveComponent)("RouterLink");
-            _push(`<div${(0, server_renderer_1.ssrRenderAttrs)((0, vue_2.mergeProps)({ class: "home-page" }, _attrs))} data-v-6c5fa6b7><h1 data-v-6c5fa6b7>This page render with SSR</h1><div class="counter-wrapper" data-v-6c5fa6b7><span data-v-6c5fa6b7>You can try this counter components</span>`);
+            _push(`<div${(0, server_renderer_1.ssrRenderAttrs)((0, vue_2.mergeProps)({ class: "home-page" }, _attrs))} data-v-1b4bcc69><h1 data-v-1b4bcc69>This page render with SSR</h1><div data-v-1b4bcc69>Server time: ${(0, server_renderer_1.ssrInterpolate)((_a = (0, vue_2.unref)(timeData)) === null || _a === void 0 ? void 0 : _a.time)}</div><div class="counter-wrapper" data-v-1b4bcc69><span data-v-1b4bcc69>You can try this counter components</span>`);
             _push((0, server_renderer_1.ssrRenderComponent)(Counter_vue_1.default, null, null, _parent));
             _push(`</div>`);
             _push((0, server_renderer_1.ssrRenderComponent)(_component_RouterLink, { to: { name: 'News' } }, {
@@ -418,44 +549,34 @@ exports["default"] = (0, vue_1.defineComponent)(Object.assign(Object.assign({}, 
 
 "use strict";
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const vue_1 = __webpack_require__(734);
 const vue_2 = __webpack_require__(734);
 const server_renderer_1 = __webpack_require__(259);
-const pinia_1 = __webpack_require__(545);
 const news_1 = __webpack_require__(258);
 const vue_3 = __webpack_require__(734);
-const safeOnServerPrefetch_1 = __webpack_require__(387);
+const useStoreRequest_1 = __importDefault(__webpack_require__(247));
+const news_2 = __webpack_require__(451);
 exports["default"] = (0, vue_1.defineComponent)(Object.assign({
     name: 'NewsPage',
 }, { __name: 'index', __ssrInlineRender: true, setup(__props) {
         const newsStore = (0, news_1.useNewsStore)();
-        const { news } = (0, pinia_1.storeToRefs)(newsStore);
-        (0, safeOnServerPrefetch_1.safeOnServerPrefetch)(() => __awaiter(this, void 0, void 0, function* () {
-            yield newsStore.fetchNews();
-        }));
-        (0, vue_3.onMounted)(() => __awaiter(this, void 0, void 0, function* () {
-            if (!(news === null || news === void 0 ? void 0 : news.value)) {
-                yield newsStore.fetchNews();
-            }
-        }));
+        const { data: news } = (0, useStoreRequest_1.default)({
+            fetchMethod: news_2.getNews,
+            store: newsStore,
+            stateKey: 'news',
+        });
         (0, vue_3.onUnmounted)(() => {
             newsStore.$reset();
         });
         return (_ctx, _push, _parent, _attrs) => {
             var _a, _b, _c;
-            _push(`<div${(0, server_renderer_1.ssrRenderAttrs)((0, vue_2.mergeProps)({ class: "news-page" }, _attrs))} data-v-474f98a0><h1 class="title" data-v-474f98a0>${(0, server_renderer_1.ssrInterpolate)((_a = (0, vue_2.unref)(news)) === null || _a === void 0 ? void 0 : _a.title)}</h1><ul class="news-list" data-v-474f98a0><!--[-->`);
+            _push(`<div${(0, server_renderer_1.ssrRenderAttrs)((0, vue_2.mergeProps)({ class: "news-page" }, _attrs))} data-v-3c7e1290><h1 class="title" data-v-3c7e1290>${(0, server_renderer_1.ssrInterpolate)((_a = (0, vue_2.unref)(news)) === null || _a === void 0 ? void 0 : _a.title)}</h1><ul class="news-list" data-v-3c7e1290><!--[-->`);
             (0, server_renderer_1.ssrRenderList)((_c = (_b = (0, vue_2.unref)(news)) === null || _b === void 0 ? void 0 : _b.items) !== null && _c !== void 0 ? _c : [], (item) => {
-                _push(`<li class="news-list__item" data-v-474f98a0><div class="news-content" data-v-474f98a0>${item.content_html}</div></li>`);
+                _push(`<li class="news-list__item" data-v-3c7e1290><div class="news-content" data-v-3c7e1290>${item.content_html}</div></li>`);
             });
             _push(`<!--]--></ul></div>`);
         };
@@ -751,7 +872,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(_index_vue_vue_type_script_lang_ts_setup_true__WEBPACK_IMPORTED_MODULE_0__["default"], [['__scopeId',"data-v-6c5fa6b7"]])
+const __exports__ = /*#__PURE__*/(0,_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(_index_vue_vue_type_script_lang_ts_setup_true__WEBPACK_IMPORTED_MODULE_0__["default"], [['__scopeId',"data-v-1b4bcc69"]])
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
 
@@ -776,7 +897,7 @@ __webpack_require__.r(__webpack_exports__);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(_index_vue_vue_type_script_lang_ts_setup_true__WEBPACK_IMPORTED_MODULE_0__["default"], [['__scopeId',"data-v-474f98a0"]])
+const __exports__ = /*#__PURE__*/(0,_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(_index_vue_vue_type_script_lang_ts_setup_true__WEBPACK_IMPORTED_MODULE_0__["default"], [['__scopeId',"data-v-3c7e1290"]])
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
 

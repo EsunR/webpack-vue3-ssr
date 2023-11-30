@@ -3,6 +3,7 @@ import {createProxyMiddleware, fixRequestBody} from 'http-proxy-middleware';
 import {PROXIES} from '../config';
 import {log} from '../utils/log';
 import path from 'path';
+import {mountRoutes} from '../routers';
 
 const APP_ENV = process.env.APP_ENV || 'dev';
 
@@ -15,6 +16,8 @@ export default function commonMiddleware(app: Express) {
             index: false,
         })
     );
+
+    mountRoutes(app);
 
     const needProxyPaths = Object.keys(PROXIES[APP_ENV] || {});
     needProxyPaths?.forEach(path => {
