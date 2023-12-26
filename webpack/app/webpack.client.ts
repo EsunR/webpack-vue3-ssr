@@ -5,8 +5,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import webpack from 'webpack';
+import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 import {merge} from 'webpack-merge';
-import {ENV_DEFINE, IS_DEV, IS_VERCEL, ROOT_DIR} from '../config';
+import {DIST_DIR, ENV_DEFINE, IS_DEV, ROOT_DIR} from '../config';
 import commonConfig from './webpack.common';
 
 const config = merge(commonConfig, {
@@ -15,7 +16,7 @@ const config = merge(commonConfig, {
     devtool: IS_DEV ? 'source-map' : false,
     entry: path.resolve(ROOT_DIR, './app/entry/client.ts'),
     output: {
-        path: path.resolve(ROOT_DIR, IS_VERCEL ? '@vercel/client' : 'dist/client'),
+        path: path.resolve(DIST_DIR, 'client'),
         clean: true,
         filename: 'static/js/[name].[contenthash:8].js',
         chunkFilename: 'static/js/[name].[contenthash:8].js',
@@ -38,6 +39,13 @@ const config = merge(commonConfig, {
             },
         ],
     },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            minSize: 30000,
+            maxAsyncRequests: 5,
+        },
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(ROOT_DIR, 'public', './index.html'),
@@ -54,6 +62,16 @@ const config = merge(commonConfig, {
             ...ENV_DEFINE,
             'process.env.IS_NODE': false,
         }),
+        ...(IS_DEV
+            ? []
+            : [
+                  // Prod only plugins
+                  new BundleAnalyzerPlugin({
+                      analyzerMode: 'static',
+                      openAnalyzer: false,
+                      reportFilename: path.resolve(DIST_DIR, 'report.html'),
+                  }),
+              ]),
     ],
 });
 

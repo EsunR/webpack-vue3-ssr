@@ -4,14 +4,18 @@
     "main": {
       "name": "main",
       "chunks": [
+        55,
         179
       ],
       "assets": [
         {
+          "name": "static/js/55.7845dd38.js"
+        },
+        {
           "name": "static/css/main.a9b887fc.css"
         },
         {
-          "name": "static/js/main.7c87f4c2.js"
+          "name": "static/js/main.1538e7d8.js"
         }
       ],
       "filteredAssets": 0,
