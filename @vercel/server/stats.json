@@ -8,7 +8,45 @@
       ],
       "assets": [
         {
-          "name": "static/js/main.6feffd22.js"
+          "name": "static/js/main.2dc3f297.js"
+        }
+      ],
+      "filteredAssets": 0,
+      "assetsSize": null,
+      "auxiliaryAssets": [],
+      "filteredAuxiliaryAssets": 0,
+      "auxiliaryAssetsSize": 0,
+      "children": {},
+      "childAssets": {},
+      "isOverSizeLimit": false
+    },
+    "home-page": {
+      "name": "home-page",
+      "chunks": [
+        179
+      ],
+      "assets": [
+        {
+          "name": "static/js/main.2dc3f297.js"
+        }
+      ],
+      "filteredAssets": 0,
+      "assetsSize": null,
+      "auxiliaryAssets": [],
+      "filteredAuxiliaryAssets": 0,
+      "auxiliaryAssetsSize": 0,
+      "children": {},
+      "childAssets": {},
+      "isOverSizeLimit": false
+    },
+    "news-page": {
+      "name": "news-page",
+      "chunks": [
+        179
+      ],
+      "assets": [
+        {
+          "name": "static/js/main.2dc3f297.js"
         }
       ],
       "filteredAssets": 0,

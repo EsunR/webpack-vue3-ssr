@@ -1,3 +1,17 @@
+<script lang="ts" setup>
+import {ref} from 'vue';
+
+defineOptions({
+    name: 'Counter',
+});
+
+const count = ref<number>(0);
+
+const addCount = (num: number) => {
+    count.value += num;
+};
+</script>
+
 <template>
     <div class="counter">
         <h3 class="counter-number">{{ count }}</h3>
@@ -7,26 +21,6 @@
         </div>
     </div>
 </template>
-
-<script lang="ts">
-import {defineComponent, ref} from 'vue';
-
-export default defineComponent({
-    name: 'Counter',
-    setup() {
-        const count = ref<number>(0);
-
-        const addCount = (num: number) => {
-            count.value += num;
-        };
-
-        return {
-            count,
-            addCount,
-        };
-    },
-});
-</script>
 
 <style scoped>
 .counter {

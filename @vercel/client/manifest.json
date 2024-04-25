@@ -1,7 +1,13 @@
 {
-  "main.css": "/static/css/main.a9b887fc.css",
-  "main.js": "/static/js/main.1538e7d8.js",
-  "static/js/55.7845dd38.js": "/static/js/55.7845dd38.js",
-  "index.html": "/index.html",
-  "stats.json": "/stats.json"
+  "main.css": "/static/css/main.19c7d5d7.css",
+  "main.js": "/static/js/main.9e7fd7a5.js",
+  "home-page.css": "/static/css/home-page.ad5885ee.css",
+  "home-page.js": "/static/js/home-page.931e838c.js",
+  "news-page.css": "/static/css/news-page.b18b75f8.css",
+  "news-page.js": "/static/js/news-page.6c080ae7.js",
+  "static/js/283.5f7f2ce6.js": "/static/js/283.5f7f2ce6.js",
+  "static/js/257.966a79c2.js": "/static/js/257.966a79c2.js",
+  "static/js/63.60a5393e.js": "/static/js/63.60a5393e.js",
+  "stats.json": "/stats.json",
+  "index.html": "/index.html"
 }

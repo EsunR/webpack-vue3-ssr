@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import {useNewsStore} from '@/store/news';
-import {onUnmounted} from 'vue';
 import useStoreRequest from '@/hooks/useStoreRequest';
 import {getNews} from '@/api/news';
 
@@ -14,10 +13,6 @@ const {data: news} = useStoreRequest({
     fetchMethod: getNews,
     store: newsStore,
     stateKey: 'news',
-});
-
-onUnmounted(() => {
-    newsStore.$reset();
 });
 </script>
 

@@ -31,7 +31,7 @@ export function useStoreRequest<
             loading.value = false;
         }
     };
-    9;
+    
     safeOnServerPrefetch(async () => {
         await getData(initParams);
     });

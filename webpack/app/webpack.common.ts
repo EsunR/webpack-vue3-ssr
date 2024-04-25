@@ -7,10 +7,9 @@ import webpack from 'webpack';
 import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
 // @ts-ignore
 import {StatsWriterPlugin} from 'webpack-stats-plugin';
-import {ROOT_DIR} from '../config';
+import {IS_DEV, ROOT_DIR} from '../config';
 
 const config: webpack.Configuration = {
-    mode: 'production',
     resolve: {
         extensions: ['.ts', '.tsx', '.js'],
         alias: {
@@ -28,22 +27,22 @@ const config: webpack.Configuration = {
             {
                 test: /\.m?js?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env'],
-                    },
-                },
+                use: [IS_DEV ? null : 'babel-loader'],
             },
             {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
-                loader: 'ts-loader',
-                options: {
-                    transpileOnly: true,
-                    appendTsSuffixTo: ['\\.vue$'],
-                    happyPackMode: true,
-                },
+                use: [
+                    IS_DEV ? null : 'babel-loader',
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                            appendTsSuffixTo: ['\\.vue$'],
+                            happyPackMode: true,
+                        },
+                    },
+                ],
             },
         ],
     },
