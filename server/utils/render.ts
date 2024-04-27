@@ -5,47 +5,6 @@ import {renderToString} from 'vue/server-renderer';
 import {IHandleSSROptions, IPreloadLinks, IRenderHTMLOptions, IWebpackStats} from '../types';
 import {log, logMemoryUse} from './log';
 
-function getPreloadLinkByChunkNames(chunkNames: string[], stats: IWebpackStats): IPreloadLinks {
-    // 获取到 webpack 中配置的 publicPath
-    const PUBLIC_PATH = stats.publicPath as string;
-    const cssAssets: string[] = [];
-    const jsAssets: string[] = [];
-    chunkNames.forEach(name => {
-        const currentCssAssets: string[] = [];
-        const currentJsAssets: string[] = [];
-        //  根据具名子包，查询到所依赖的资源
-        stats.namedChunkGroups[name]?.assets.forEach(item => {
-            if (item.name.endsWith('.css')) {
-                currentCssAssets.push(`${PUBLIC_PATH}${item.name}`);
-            } else if (item.name.endsWith('.js')) {
-                currentJsAssets.push(`${PUBLIC_PATH}${item.name}`);
-            }
-        });
-        cssAssets.push(...currentCssAssets);
-        jsAssets.push(...currentJsAssets);
-    });
-
-    // 资源去重
-    const assets = Array.from(new Set([...cssAssets, ...jsAssets]));
-
-    // 生成资源标签
-    const preloadLinks: IPreloadLinks = {
-        css: '',
-        js: '',
-    };
-    assets.forEach(asset => {
-        if (asset.endsWith('.css')) {
-            preloadLinks.css +=
-                `<link rel="preload" as="style" href="${asset}">` +
-                `<link rel="stylesheet" as="style" href="${asset}">`;
-        }
-        if (asset.endsWith('.js')) {
-            preloadLinks.js += `<link rel="preload" as="script" href="${asset}">`;
-        }
-    });
-    return preloadLinks;
-}
-
 export function handleSSR(options: IHandleSSROptions) {
     return async (req: Request, res: Response, next: NextFunction) => {
         const {template} = options;
@@ -112,4 +71,50 @@ async function renderHTML(options: IRenderHTMLOptions) {
         clearTimeout(timeout);
         throw error;
     }
+}
+
+/**
+ * 根据 chunk 名称生成 preload link
+ * @param chunkNames webpack 打包后的 chunk 名
+ * @param stats webpack 打包后的分析文件，记录了每个 chunk 的依赖关系
+ */
+function getPreloadLinkByChunkNames(chunkNames: string[], stats: IWebpackStats): IPreloadLinks {
+    // 获取到 webpack 中配置的 publicPath
+    const PUBLIC_PATH = stats.publicPath as string;
+    const cssAssets: string[] = [];
+    const jsAssets: string[] = [];
+    chunkNames.forEach(name => {
+        const currentCssAssets: string[] = [];
+        const currentJsAssets: string[] = [];
+        //  根据具名子包，查询到所依赖的资源
+        stats.namedChunkGroups[name]?.assets.forEach(item => {
+            if (item.name.endsWith('.css')) {
+                currentCssAssets.push(`${PUBLIC_PATH}${item.name}`);
+            } else if (item.name.endsWith('.js')) {
+                currentJsAssets.push(`${PUBLIC_PATH}${item.name}`);
+            }
+        });
+        cssAssets.push(...currentCssAssets);
+        jsAssets.push(...currentJsAssets);
+    });
+
+    // 资源去重
+    const assets = Array.from(new Set([...cssAssets, ...jsAssets]));
+
+    // 生成资源标签
+    const preloadLinks: IPreloadLinks = {
+        css: '',
+        js: '',
+    };
+    assets.forEach(asset => {
+        if (asset.endsWith('.css')) {
+            preloadLinks.css +=
+                `<link rel="preload" as="style" href="${asset}">` +
+                `<link rel="stylesheet" as="style" href="${asset}">`;
+        }
+        if (asset.endsWith('.js')) {
+            preloadLinks.js += `<link rel="preload" as="script" href="${asset}">`;
+        }
+    });
+    return preloadLinks;
 }

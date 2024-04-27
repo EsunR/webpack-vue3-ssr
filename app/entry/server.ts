@@ -1,4 +1,4 @@
-import {Request} from 'express';
+import type {Request} from 'express';
 import createAppInstance from './main';
 
 export interface Ctx {
@@ -24,5 +24,3 @@ export default async function createServerAppInstance(ctx: Ctx) {
         pinia,
     };
 }
-
-export type CreateServerAppInstanceFunc = typeof createServerAppInstance;
