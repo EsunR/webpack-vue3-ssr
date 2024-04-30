@@ -25,7 +25,7 @@ const {data: timeData} = useStoreRequest({
             <span>You can try this counter components</span>
             <Counter />
         </div>
-        <RouterLink :to="{name: 'News'}">Navigate to News page</RouterLink>
+        <RouterLink :to="{name: 'NewsIndex'}">Navigate to News page</RouterLink>
     </div>
 </template>
 

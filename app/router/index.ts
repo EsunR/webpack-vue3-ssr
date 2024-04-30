@@ -7,18 +7,23 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: '/home',
-        name: 'Home',
-        component: () => import(/* webpackChunkName: "home-page" */ '@/views/home/index.vue'),
+        name: 'HomeIndex',
+        component: () => import(/* webpackChunkName: "HomeIndex" */ '@/views/home/index.vue'),
         meta: {
-            chunkNames: ['home-page'],
+            chunkNames: ['HomeIndex'],
         },
     },
     {
         path: '/news',
-        name: 'News',
-        component: () => import(/* webpackChunkName: "news-page" */ '@/views/news/index.vue'),
+        name: 'NewsIndex',
+        component: () => import(/* webpackChunkName: "NewsIndex" */ '@/views/news/index.vue'),
         meta: {
-            chunkNames: ['news-page'],
+            chunkNames: ['NewsIndex'],
+            ssrCache: {
+                enable: true,
+                key: '/news',
+                ttl: 60 * 60 * 1000, // 1 hour
+            },
         },
     },
 ];

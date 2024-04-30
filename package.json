@@ -82,6 +82,7 @@
 		"express": "^4.18.2",
 		"http-proxy-middleware": "^2.0.6",
 		"lodash-es": "^4.17.21",
+		"lru-cache": "^10.2.2",
 		"normalize.css": "^8.0.1",
 		"pinia": "^2.1.7",
 		"vm2": "^3.9.19",

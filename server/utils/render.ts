@@ -4,6 +4,7 @@ import {Router} from 'vue-router';
 import {renderToString} from 'vue/server-renderer';
 import {IHandleSSROptions, IPreloadLinks, IRenderHTMLOptions, IWebpackStats} from '../types';
 import {log, logMemoryUse} from './log';
+import {ssrCache} from './cache';
 
 export function handleSSR(options: IHandleSSROptions) {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -31,12 +32,25 @@ export function handleSSR(options: IHandleSSROptions) {
     };
 }
 
+/** 创建服务端 Vue 实例，返回渲染好的渲染 HTML 内容 */
 async function renderHTML(options: IRenderHTMLOptions) {
     const {template, req, createApp, clientWpStats} = options;
+
     const {app, pinia, router} = await createApp({
         req,
     });
-    const currentPageChunkNames = (router as Router).currentRoute.value.matched
+
+    const currentRoute = (router as Router).currentRoute.value;
+    // 获取 SSR 缓存
+    const cacheInfo = currentRoute.meta.ssrCache as any;
+    const enableCache = typeof cacheInfo?.enable === 'function' ? cacheInfo.enable(req) : !!cacheInfo?.enable;
+    const cacheKey = typeof cacheInfo?.key === 'function' ? cacheInfo.key(req) : cacheInfo?.key ?? req.url;
+    if (enableCache && ssrCache.has(cacheKey)) {
+        log('debug', `使用缓存的 SSR 页面, lru key ${cacheKey}`);
+        return ssrCache.get(cacheKey) as string;
+    }
+    // 添加 Preload link
+    const currentPageChunkNames = currentRoute.matched
         .map(item => item.meta?.chunkNames as string[])
         .filter(item => !!item)
         .flat();
@@ -65,6 +79,14 @@ async function renderHTML(options: IRenderHTMLOptions) {
             .replace('<!-- js-preload-links -->', `${preloadLinks.js}`)
             .replace('<!-- app-html -->', `${appContent}`)
             .replace('<!-- app-state -->', `<script>window.__INIT_STATE__ = ${devalue(pinia.state.value)}</script>`);
+
+        // 创建 SSR 缓存
+        if (enableCache) {
+            log('debug', `创建 SSR 缓存, lru key ${cacheKey}`);
+            ssrCache.set(cacheKey, html, {
+                ttl: cacheInfo.ttl,
+            });
+        }
         return html;
     } catch (error) {
         // @ts-ignore

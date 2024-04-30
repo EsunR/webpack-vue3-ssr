@@ -9,7 +9,7 @@ export default {
 <template>
     <div class="layout">
         <header>
-            <RouterLink :to="{name: 'Home'}">Webpack Vue3 SSR Demo</RouterLink>
+            <RouterLink :to="{name: 'HomeIndex'}">Webpack Vue3 SSR Demo</RouterLink>
         </header>
         <main>
             <slot />
