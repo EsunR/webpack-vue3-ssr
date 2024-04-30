@@ -62,7 +62,7 @@ const config = merge(commonConfig, {
             ...ENV_DEFINE,
             'process.env.IS_NODE': false,
         }),
-        ...(IS_DEV
+        ...(IS_DEV || process.env.PLATFORM === 'vercel'
             ? []
             : [
                   // Prod only plugins

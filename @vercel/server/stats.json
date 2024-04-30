@@ -8,7 +8,7 @@
       ],
       "assets": [
         {
-          "name": "static/js/main.2dc3f297.js"
+          "name": "static/js/main.55560f16.js"
         }
       ],
       "filteredAssets": 0,
@@ -20,14 +20,14 @@
       "childAssets": {},
       "isOverSizeLimit": false
     },
-    "home-page": {
-      "name": "home-page",
+    "HomeIndex": {
+      "name": "HomeIndex",
       "chunks": [
         179
       ],
       "assets": [
         {
-          "name": "static/js/main.2dc3f297.js"
+          "name": "static/js/main.55560f16.js"
         }
       ],
       "filteredAssets": 0,
@@ -39,14 +39,14 @@
       "childAssets": {},
       "isOverSizeLimit": false
     },
-    "news-page": {
-      "name": "news-page",
+    "NewsIndex": {
+      "name": "NewsIndex",
       "chunks": [
         179
       ],
       "assets": [
         {
-          "name": "static/js/main.2dc3f297.js"
+          "name": "static/js/main.55560f16.js"
         }
       ],
       "filteredAssets": 0,

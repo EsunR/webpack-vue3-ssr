@@ -14,7 +14,7 @@ __webpack_require__.d(__webpack_exports__, {
 // UNUSED EXPORTS: useStoreRequest
 
 // EXTERNAL MODULE: external "pinia"
-var external_pinia_ = __webpack_require__(19);
+var external_pinia_ = __webpack_require__(545);
 // EXTERNAL MODULE: external "vue"
 var external_vue_ = __webpack_require__(734);
 ;// CONCATENATED MODULE: ./app/hooks/safeOnServerPrefetch.ts
@@ -349,7 +349,7 @@ var external_vue_ = __webpack_require__(734);
 // EXTERNAL MODULE: external "vue/server-renderer"
 var server_renderer_ = __webpack_require__(259);
 // EXTERNAL MODULE: external "pinia"
-var external_pinia_ = __webpack_require__(19);
+var external_pinia_ = __webpack_require__(545);
 ;// CONCATENATED MODULE: ./app/store/home.ts
 
 
@@ -463,12 +463,12 @@ function homevue_type_script_lang_ts_setup_true_toPrimitive(input, hint) { if (h
       var _component_RouterLink = (0,external_vue_.resolveComponent)("RouterLink");
       _push("<div".concat((0,server_renderer_.ssrRenderAttrs)((0,external_vue_.mergeProps)({
         class: "home-page"
-      }, _attrs)), " data-v-1b4bcc69><h1 data-v-1b4bcc69>This page render with SSR</h1><div data-v-1b4bcc69>Server time: ").concat((0,server_renderer_.ssrInterpolate)((_unref2 = (0,external_vue_.unref)(timeData)) === null || _unref2 === void 0 ? void 0 : _unref2.time), "</div><div class=\"counter-wrapper\" data-v-1b4bcc69><span data-v-1b4bcc69>You can try this counter components</span>"));
+      }, _attrs)), " data-v-6a4b07d9><h1 data-v-6a4b07d9>This page render with SSR</h1><div data-v-6a4b07d9>Server time: ").concat((0,server_renderer_.ssrInterpolate)((_unref2 = (0,external_vue_.unref)(timeData)) === null || _unref2 === void 0 ? void 0 : _unref2.time), "</div><div class=\"counter-wrapper\" data-v-6a4b07d9><span data-v-6a4b07d9>You can try this counter components</span>"));
       _push((0,server_renderer_.ssrRenderComponent)(Counter, null, null, _parent));
       _push("</div>");
       _push((0,server_renderer_.ssrRenderComponent)(_component_RouterLink, {
         to: {
-          name: 'News'
+          name: 'NewsIndex'
         }
       }, {
         default: (0,external_vue_.withCtx)(function (_, _push, _parent, _scopeId) {
@@ -493,7 +493,7 @@ function homevue_type_script_lang_ts_setup_true_toPrimitive(input, hint) { if (h
 ;
 
 
-const home_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(homevue_type_script_lang_ts_setup_true, [['__scopeId',"data-v-1b4bcc69"]])
+const home_exports_ = /*#__PURE__*/(0,exportHelper/* default */.Z)(homevue_type_script_lang_ts_setup_true, [['__scopeId',"data-v-6a4b07d9"]])
 
 /* harmony default export */ const home = (home_exports_);
 
@@ -515,7 +515,7 @@ var external_vue_ = __webpack_require__(734);
 // EXTERNAL MODULE: external "vue/server-renderer"
 var server_renderer_ = __webpack_require__(259);
 // EXTERNAL MODULE: external "pinia"
-var external_pinia_ = __webpack_require__(19);
+var external_pinia_ = __webpack_require__(545);
 ;// CONCATENATED MODULE: ./app/store/news.ts
 
 
@@ -610,7 +610,7 @@ const __exports__ = /*#__PURE__*/(0,exportHelper/* default */.Z)(newsvue_type_sc
 
 /***/ }),
 
-/***/ 19:
+/***/ 545:
 /***/ ((module) => {
 
 module.exports = require("pinia");
@@ -714,17 +714,17 @@ __webpack_require__.d(__webpack_exports__, {
 var external_vue_ = __webpack_require__(734);
 // EXTERNAL MODULE: external "vue/server-renderer"
 var server_renderer_ = __webpack_require__(259);
-;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/ts-loader/index.js??clonedRuleSet-2.use[1]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[3]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./app/components/Layout/index.vue?vue&type=template&id=d08414f0&scoped=true&ts=true
+;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/ts-loader/index.js??clonedRuleSet-2.use[1]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[3]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./app/components/Layout/index.vue?vue&type=template&id=14dbea1c&scoped=true&ts=true
 
 
 function ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options) {
   var _component_RouterLink = (0,external_vue_.resolveComponent)("RouterLink");
   _push("<div".concat((0,server_renderer_.ssrRenderAttrs)((0,external_vue_.mergeProps)({
     class: "layout"
-  }, _attrs)), " data-v-d08414f0><header data-v-d08414f0>"));
+  }, _attrs)), " data-v-14dbea1c><header data-v-14dbea1c>"));
   _push((0,server_renderer_.ssrRenderComponent)(_component_RouterLink, {
     to: {
-      name: 'Home'
+      name: 'HomeIndex'
     }
   }, {
     default: (0,external_vue_.withCtx)(function (_, _push, _parent, _scopeId) {
@@ -736,11 +736,11 @@ function ssrRender(_ctx, _push, _parent, _attrs, $props, $setup, $data, $options
     }),
     _: 1
   }, _parent));
-  _push("</header><main data-v-d08414f0>");
+  _push("</header><main data-v-14dbea1c>");
   (0,server_renderer_.ssrRenderSlot)(_ctx.$slots, "default", {}, null, _push, _parent);
-  _push("</main><footer data-v-d08414f0>Fork me on \xA0<a target=\"_blank\" href=\"https://github.com/EsunR/webpack-vue3-ssr\" data-v-d08414f0>Github</a></footer></div>");
+  _push("</main><footer data-v-14dbea1c>Fork me on \xA0<a target=\"_blank\" href=\"https://github.com/EsunR/webpack-vue3-ssr\" data-v-14dbea1c>Github</a></footer></div>");
 }
-;// CONCATENATED MODULE: ./app/components/Layout/index.vue?vue&type=template&id=d08414f0&scoped=true&ts=true
+;// CONCATENATED MODULE: ./app/components/Layout/index.vue?vue&type=template&id=14dbea1c&scoped=true&ts=true
 
 ;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/ts-loader/index.js??clonedRuleSet-2.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./app/components/Layout/index.vue?vue&type=script&lang=ts
 /* harmony default export */ const Layoutvue_type_script_lang_ts = ({
@@ -758,7 +758,7 @@ var exportHelper = __webpack_require__(744);
 ;
 
 
-const __exports__ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Layoutvue_type_script_lang_ts, [['ssrRender',ssrRender],['__scopeId',"data-v-d08414f0"]])
+const __exports__ = /*#__PURE__*/(0,exportHelper/* default */.Z)(Layoutvue_type_script_lang_ts, [['ssrRender',ssrRender],['__scopeId',"data-v-14dbea1c"]])
 
 /* harmony default export */ const Layout = (__exports__);
 ;// CONCATENATED MODULE: ./node_modules/babel-loader/lib/index.js!./node_modules/ts-loader/index.js??clonedRuleSet-2.use[1]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[8].use[0]!./app/App.vue?vue&type=script&lang=ts&setup=true
@@ -805,23 +805,29 @@ var routes = [{
   redirect: '/home'
 }, {
   path: '/home',
-  name: 'Home',
+  name: 'HomeIndex',
   component: function component() {
-    return Promise.resolve(/* import() | home-page */).then(__webpack_require__.bind(__webpack_require__, 145));
+    return Promise.resolve(/* import() | HomeIndex */).then(__webpack_require__.bind(__webpack_require__, 145));
   },
   meta: {
-    chunkNames: ['home-page']
+    chunkNames: ['HomeIndex']
   }
 }, {
   path: '/news',
-  name: 'News',
+  name: 'NewsIndex',
   component: function component() {
-    return Promise.resolve(/* import() | news-page */).then(__webpack_require__.bind(__webpack_require__, 973));
+    return Promise.resolve(/* import() | NewsIndex */).then(__webpack_require__.bind(__webpack_require__, 973));
   },
   meta: {
-    chunkNames: ['news-page']
+    chunkNames: ['NewsIndex'],
+    ssrCache: {
+      enable: true,
+      key: '/news',
+      ttl: 60 * 60 * 1000 // 1 hour
+    }
   }
 }];
+
 function createRouterInstance() {
   var router = (0,external_vue_router_namespaceObject.createRouter)({
     routes: routes,
@@ -830,7 +836,7 @@ function createRouterInstance() {
   return router;
 }
 // EXTERNAL MODULE: external "pinia"
-var external_pinia_ = __webpack_require__(19);
+var external_pinia_ = __webpack_require__(545);
 // EXTERNAL MODULE: ./app/utils/const.ts
 var utils_const = __webpack_require__(67);
 ;// CONCATENATED MODULE: ./app/entry/main.ts
