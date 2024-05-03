@@ -26,12 +26,14 @@ const config = merge(commonConfig, {
         rules: [
             {
                 test: /\.css$/,
-                use: [IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+                // use: [IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
             },
             {
                 test: /\.scss$/,
                 use: [
-                    IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+                    // IS_DEV ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'postcss-loader',
                     'sass-loader',

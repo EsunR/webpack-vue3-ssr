@@ -26,3 +26,9 @@ export function createCJSModelInVm(code: string) {
     const runResult = vm.run(code, 'vm2.js');
     return runResult;
 }
+
+export function wait(time: number) {
+    return new Promise(resolve => {
+        setTimeout(resolve, time);
+    });
+}

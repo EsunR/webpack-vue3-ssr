@@ -11,6 +11,9 @@ const routes: RouteRecordRaw[] = [
         component: () => import(/* webpackChunkName: "HomeIndex" */ '@/views/home/index.vue'),
         meta: {
             chunkNames: ['HomeIndex'],
+            ssr: {
+                stream: true,
+            },
         },
     },
     {
@@ -19,10 +22,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import(/* webpackChunkName: "NewsIndex" */ '@/views/news/index.vue'),
         meta: {
             chunkNames: ['NewsIndex'],
-            ssrCache: {
-                enable: true,
-                key: '/news',
-                ttl: 60 * 60 * 1000, // 1 hour
+            ssr: {
+                cache: {
+                    enable: true,
+                    key: '/news',
+                    ttl: 60 * 60 * 1000, // 1 hour
+                },
             },
         },
     },

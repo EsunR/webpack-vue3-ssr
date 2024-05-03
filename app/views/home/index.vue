@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import {getTest} from '@/api/home';
 import {useHomeStore} from '@/store/home';
 import Counter from './components/Counter.vue';
-import useStoreRequest from '@/hooks/useStoreRequest';
-import {getTest} from '@/api/home';
+import useStoreRequestSync from '@/hooks/useStoreRequestSync';
 
 defineOptions({
     name: 'HomePage',
@@ -10,7 +10,7 @@ defineOptions({
 
 const homeStore = useHomeStore();
 
-const {data: timeData} = useStoreRequest({
+const {data: timeData} = useStoreRequestSync({
     fetchMethod: getTest,
     store: homeStore,
     stateKey: 'time',

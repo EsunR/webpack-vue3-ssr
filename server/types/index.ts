@@ -3,9 +3,9 @@ import {Pinia} from 'pinia';
 import {App} from 'vue';
 import {Router} from 'vue-router';
 
-export type CreateServerAppInstanceFunc = (ctx: {
-    req: Request;
-}) => Promise<{app: App<Element>; router: Router; pinia: Pinia}>;
+export type CreateAppResult = {app: App<Element>; router: Router; pinia: Pinia};
+
+export type CreateServerAppInstanceFunc = (ctx: {req: Request}) => Promise<CreateAppResult>;
 
 export interface IHandleSSROptions {
     template: string;

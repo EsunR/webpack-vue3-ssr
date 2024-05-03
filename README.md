@@ -21,3 +21,16 @@ cd dist
 node index.js
 ```
 
+# 流式渲染对服务端性能区别
+
+未开启流式渲染：
+
+![](https://esunr-image-bed.oss-cn-beijing.aliyuncs.com/picgo/20240503161739.png)
+
+![](https://esunr-image-bed.oss-cn-beijing.aliyuncs.com/picgo/20240503161652.png)
+
+开启流式渲染：
+
+![](https://esunr-image-bed.oss-cn-beijing.aliyuncs.com/picgo/20240503162005.png)
+
+![](https://esunr-image-bed.oss-cn-beijing.aliyuncs.com/picgo/20240503162058.png)
