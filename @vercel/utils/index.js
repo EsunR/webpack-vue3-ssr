@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createCJSModelInVm = exports.createCJSModel = void 0;
+exports.wait = exports.createCJSModelInVm = exports.createCJSModel = void 0;
 const vm2_1 = require("vm2");
 /**
  * 根据代码创建 CommonJS 模块
@@ -29,3 +29,9 @@ function createCJSModelInVm(code) {
     return runResult;
 }
 exports.createCJSModelInVm = createCJSModelInVm;
+function wait(time) {
+    return new Promise(resolve => {
+        setTimeout(resolve, time);
+    });
+}
+exports.wait = wait;
